@@ -148,6 +148,8 @@ footer{border-top:1px solid var(--line);padding:24px 0 48px;font-size:14px;color
 .btn:hover{border-color:var(--action);color:var(--action)}
 .btn.primary{background:var(--action);border-color:var(--action);color:#fff}
 .btn.primary:hover{background:var(--action-hover);color:#fff}
+.team{list-style:none;padding:0;margin:8px 0 14px;display:grid;grid-template-columns:repeat(4,1fr);gap:6px 16px;font-size:15.5px;color:var(--ink-1)}
+@media (max-width:640px){.team{grid-template-columns:repeat(2,1fr)}}
 .todo{background:var(--warn-bg);border:1px dashed var(--warn-line);border-radius:6px;padding:10px 14px;font-size:14.5px}
 
 @media (max-width:860px){
@@ -466,7 +468,7 @@ footer{border-top:1px solid var(--line);padding:24px 0 48px;font-size:14px;color
   </div>
 
   <h3>Team</h3>
-  <p class="todo"><b>To fill in:</b> names, affiliations and which rung each person worked on.</p>
+  <ul class="team"><li>Nick Jones</li><li>Chris Scott</li><li>Jack Copping</li><li>Te Xiao</li><li>Claire Rye</li><li>Samantha Rickard</li><li>Jarrah Dowrick</li><li>Jack Flanagan</li><li>Peter Hunter</li><li>Carvin Chen</li><li>Jun Huh</li><li>Neil Blake</li><li>Jagir Hussan</li><li>Ben Curran</li><li>Lizhe Hong</li><li>Mohamed Elwakdy</li></ul>
 
   <h3>Code, data and platforms</h3>
   <div class="links">
