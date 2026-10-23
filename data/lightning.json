@@ -1,0 +1,64 @@
+{
+  "_source": "VDSAI Lightning team reports, OSI Hackathon 2026 (Auckland): 'VDSAI Lightning: training and screening results' and 'Round 3 head-to-head: AMPL and VDSAI Lightning on the same data'. Values transcribed from those reports; see writeup for context.",
+  "model": "AttentiveFP (PyTorch Geometric + Lightning)",
+  "baseline": "AMPL GraphConv (TensorFlow)",
+  "split": "scaffold, seed 42",
+  "training_3p5M": {
+    "molecules": {"lightning": 3279447, "ampl": 2377265},
+    "test_molecules": {"lightning": 163972, "ampl": 118864},
+    "test": {
+      "r2":   {"lightning": 0.703, "lightning_tuned": 0.752, "ampl": 0.690},
+      "rmse": {"lightning": 4.828, "lightning_tuned": 4.413, "ampl": 4.609},
+      "mae":  {"lightning": 3.771, "lightning_tuned": 3.427, "ampl": 3.617}
+    },
+    "wall_clock_s": {"lightning": 8764, "ampl_sharded": 116747},
+    "speedup": 13.3
+  },
+  "training_enamine_0p5M": {
+    "molecules": {"lightning": 500026, "ampl": 497753},
+    "test": {
+      "r2":   {"lightning": 0.575, "ampl": 0.565},
+      "rmse": {"lightning": 4.655, "ampl": 4.751},
+      "mae":  {"lightning": 3.647, "ampl": 3.682}
+    },
+    "wall_clock_s": {"lightning": 567, "ampl": 7004},
+    "speedup": 12.4
+  },
+  "tuning_3p5M": {
+    "study": "Optuna, 40 trials (24 complete, 13 pruned, 3 failed); 40 epochs/trial, median pruner after 10; best retrained 100 epochs, test evaluated once",
+    "before": {"r2": 0.703, "rmse": 4.828, "mae": 3.771, "ef_top1pct": 7.19, "bedroc": 0.699},
+    "tuned":  {"r2": 0.752, "rmse": 4.413, "mae": 3.427, "ef_top1pct": 7.48, "bedroc": 0.717},
+    "settings": {
+      "hidden_size": [128, 256], "graph_layers": [3, 4], "readout_timesteps": [2, 2],
+      "learning_rate": [5.0e-4, 6.1e-4], "weight_decay": [1.0e-4, 4.0e-6], "dropout": [0.20, 0.002]
+    }
+  },
+  "screen_zinc": {"molecules": 925000000, "wall_clock": "4 h 27 min", "hardware": "one workspace",
+                  "vs_docking": "~540x faster than docking the same library (~100 days)",
+                  "vs_ampl_estimate": "~135x faster than AMPL's estimated 600 GPU hours"},
+  "round3_pool3": {
+    "training_rows": 2281200,
+    "pool_molecules": 98271339,
+    "reference": "top 1M docking rows of pool_3 = 972,954 distinct compounds",
+    "recall_top1M":           {"lightning": 0.350, "ampl": 0.323, "size_only": 0.026, "random": 0.012},
+    "recall_equal_distinct":  {"lightning": 0.334, "ampl": 0.323, "n_distinct": 923678},
+    "recall_docking_top100k": {"lightning": 0.604, "ampl": 0.564},
+    "test": {
+      "r2":   {"lightning": 0.696, "ampl": 0.665},
+      "rmse": {"lightning": 4.450, "ampl": 4.675},
+      "mae":  {"lightning": 3.465, "ampl": 3.687}
+    },
+    "training_wall_clock_s": {"lightning": 3364, "ampl": 91351, "speedup": 27},
+    "stages": {
+      "clean": ["32 s", "47 min 4 s"],
+      "featurise_split": ["2 min 6 s", "14 min 43 s"],
+      "train_test": ["53 min 26 s", "24 h 20 min 44 s"],
+      "per_epoch": ["38 s", "~13.8 min"]
+    },
+    "screen": {"lightning": "26 min 13 s on one GPU", "ampl_all_chunks_at_once": "35 h 51 min",
+               "ampl_as_run": "4 d 9 h 7 min", "gpu_hours": {"lightning": 0.44, "ampl": 166.4},
+               "fewer_gpu_hours": 381, "faster_than_ampl_as_run": 241, "faster_than_ampl_parallel": 82},
+    "docking_noise": {"replicate_correlation": 0.30, "mean_abs_difference_fitness_units": 3.8,
+                      "identical_scores_fraction": 0.003}
+  }
+}

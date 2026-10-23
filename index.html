@@ -1,0 +1,489 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Surrogate Chain · OSI Hackathon 2026</title>
+<meta name="description" content="How far can a chain of surrogates take us in biomolecular interactions? Two rungs climbed at the OSI Hackathon 2026, Auckland: billion-molecule screening with a docking surrogate, and molecular dynamics turned into a runnable CellML physiology model.">
+<meta property="og:title" content="How far can a chain of surrogates take us?">
+<meta property="og:description" content="Billion-molecule screening in an afternoon, and atoms carried up to a cell model. OSI Hackathon 2026, Auckland.">
+<meta property="og:image" content="assets/video/poster.jpg">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23141C36'/%3E%3Cpath d='M10 6v20M22 6v20M10 11h12M10 16h12M10 21h12' stroke='%2300D3F6' stroke-width='2.4' stroke-linecap='round'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --void:#141C36; --void-deep:#0D1226; --void-panel:#1D2A4F;
+  --on-void:#EEF1FB; --on-void-soft:#9AA7CD;
+  --cyan:#00D3F6; --gold:#C79A4D;
+  --font-display:"Inter","Helvetica Neue",Arial,sans-serif;
+  --font-mono:"JetBrains Mono","SFMono-Regular",Menlo,monospace;
+
+  --bg:#F6F6F2; --surface:#FCFCFB; --panel:#FFFFFF;
+  --ink-1:#142042; --ink-2:#1E2A4A; --ink-soft:#5C6470; --ink-muted:#667085;
+  --line:rgba(186,193,214,.65); --action:#3F5FBC; --action-hover:#314C98;
+  --s1:#3F5FBC; --s2:#C79A4D; --base:#B9BFCC;
+  --grid:#E6E8EE; --axis:#B9BFCC; --hover:rgba(63,95,188,.07);
+  --tag-bg:#EEF1F8; --warn-bg:#FBF5EA; --warn-line:#EAD8AA;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0D1226; --surface:#141C36; --panel:#1D2A4F;
+    --ink-1:#EEF1FB; --ink-2:#D7DCEC; --ink-soft:#9AA7CD; --ink-muted:#8A96BC;
+    --line:rgba(154,167,205,.28); --action:#8AA0E6; --action-hover:#A9BAF0;
+    --s1:#6A84DE; --s2:#B8893C; --base:#4A5578;
+    --grid:#26335C; --axis:#3A4770; --hover:rgba(138,160,230,.10);
+    --tag-bg:#1D2A4F; --warn-bg:#2A2A33; --warn-line:#7A5A23;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0D1226; --surface:#141C36; --panel:#1D2A4F;
+  --ink-1:#EEF1FB; --ink-2:#D7DCEC; --ink-soft:#9AA7CD; --ink-muted:#8A96BC;
+  --line:rgba(154,167,205,.28); --action:#8AA0E6; --action-hover:#A9BAF0;
+  --s1:#6A84DE; --s2:#B8893C; --base:#4A5578;
+  --grid:#26335C; --axis:#3A4770; --hover:rgba(138,160,230,.10);
+  --tag-bg:#1D2A4F; --warn-bg:#2A2A33; --warn-line:#7A5A23;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink-2);font-family:var(--font-display);
+  font-size:17px;line-height:1.62;-webkit-font-smoothing:antialiased}
+a{color:var(--action);text-underline-offset:2px}
+a:hover{color:var(--action-hover)}
+.wrap{max-width:1040px;margin:0 auto;padding:0 16px}
+.col{max-width:740px}
+code,.mono{font-family:var(--font-mono);font-size:.86em}
+
+/* hero */
+.hero{background:var(--void);color:var(--on-void);padding:28px 0 40px;
+  background-image:radial-gradient(900px 420px at 85% -10%,rgba(0,211,246,.10),transparent 60%),
+  radial-gradient(700px 380px at -10% 110%,rgba(139,124,246,.10),transparent 60%)}
+.topbar{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;
+  font-family:var(--font-mono);font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--on-void-soft)}
+.topbar a{color:var(--on-void-soft);text-decoration:none}
+.topbar a:hover{color:var(--on-void)}
+.topbar .dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--cyan);margin-right:8px;vertical-align:1px}
+.hero h1{font-weight:800;letter-spacing:-.03em;line-height:1.04;font-size:clamp(34px,6vw,60px);
+  margin:34px 0 18px;max-width:880px;color:#fff}
+.hero .lead{font-size:clamp(17px,2.1vw,20px);color:var(--on-void);max-width:760px;margin:0 0 12px}
+.hero .lead.soft{color:var(--on-void-soft)}
+.video{margin-top:30px;border-radius:10px;overflow:hidden;background:#000;
+  box-shadow:0 1px 2px rgba(0,0,0,.3),0 18px 48px rgba(0,0,0,.35);aspect-ratio:16/9}
+.video video{width:100%;height:100%;display:block}
+.video-links{margin-top:10px;font-size:14px;color:var(--on-void-soft)}
+.video-links a{color:var(--on-void)}
+
+/* stat tiles */
+.tiles{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:-22px 0 0;position:relative}
+.tile{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:16px 16px 14px;
+  box-shadow:0 1px 2px rgba(20,18,35,.06),0 10px 28px rgba(20,18,35,.06)}
+.tile .k{font-family:var(--font-mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-muted)}
+.tile .v{font-weight:800;letter-spacing:-.03em;font-size:34px;line-height:1.1;color:var(--ink-1);margin:6px 0 4px}
+.tile .d{font-size:13.5px;line-height:1.45;color:var(--ink-soft)}
+
+/* body */
+main{padding:24px 0 40px}
+section{padding:26px 0 6px}
+h2{font-weight:800;letter-spacing:-.02em;font-size:30px;line-height:1.15;color:var(--ink-1);margin:18px 0 12px}
+h3{font-weight:700;letter-spacing:-.01em;font-size:20px;color:var(--ink-1);margin:28px 0 8px}
+h2 .n{font-family:var(--font-mono);font-size:13px;font-weight:600;color:var(--ink-muted);letter-spacing:.06em;
+  display:block;margin-bottom:6px;text-transform:uppercase}
+p{margin:0 0 14px}
+ul,ol{padding-left:22px;margin:0 0 14px}
+li{margin:4px 0}
+.rung{display:inline-block;font-family:var(--font-mono);font-size:11.5px;letter-spacing:.05em;text-transform:uppercase;
+  background:var(--tag-bg);color:var(--ink-soft);border:1px solid var(--line);border-radius:4px;padding:1px 8px;margin-right:6px;vertical-align:2px}
+.callout{border-left:3px solid var(--s2);background:var(--warn-bg);padding:12px 16px;border-radius:0 6px 6px 0;margin:16px 0;font-size:15.5px}
+.callout strong{color:var(--ink-1)}
+
+/* chain diagram */
+.chain{margin:18px 0 8px;display:grid;gap:10px}
+.lane{display:grid;grid-template-columns:150px 1fr;gap:12px;align-items:center}
+.lane .who{font-family:var(--font-mono);font-size:11.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--ink-muted)}
+.steps{display:flex;flex-wrap:wrap;align-items:stretch;gap:6px}
+.step{background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:7px 10px;font-size:13.5px;line-height:1.3;color:var(--ink-1)}
+.step small{display:block;color:var(--ink-muted);font-size:11.5px;font-family:var(--font-mono)}
+.step.hl{border-color:var(--s1);box-shadow:inset 3px 0 0 var(--s1)}
+.arrow{align-self:center;color:var(--ink-muted);font-size:14px}
+
+/* figures */
+figure{margin:22px 0}
+.figrow{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:16px 16px 12px}
+.card h4{margin:0 0 2px;font-size:15px;color:var(--ink-1)}
+.card .sub{margin:0 0 10px;font-size:12.5px;color:var(--ink-muted);font-family:var(--font-mono)}
+figcaption{font-size:14px;color:var(--ink-soft);margin-top:10px;line-height:1.5}
+figcaption b{color:var(--ink-1)}
+.legend{display:flex;gap:14px;flex-wrap:wrap;font-size:12.5px;color:var(--ink-soft);margin:0 0 8px}
+.legend i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:6px;vertical-align:-1px}
+
+/* tables */
+.tbl{width:100%;border-collapse:collapse;font-size:14.5px;margin:10px 0 6px}
+.tbl th{font-family:var(--font-mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-muted);
+  text-align:right;font-weight:600;padding:8px 8px;border-bottom:1px solid var(--line)}
+.tbl th:first-child,.tbl td:first-child{text-align:left}
+.tbl td{padding:7px 8px;border-bottom:1px solid var(--line);text-align:right;font-variant-numeric:tabular-nums}
+.tbl td.b{font-weight:700;color:var(--ink-1)}
+.tbl .note{color:var(--ink-muted);font-size:12.5px}
+.scroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.small{font-size:14px;color:var(--ink-soft)}
+
+/* four questions */
+.q4{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin:12px 0}
+.q4 .card p{font-size:14.5px;margin:0 0 6px}
+.q4 .card .qq{font-family:var(--font-mono);font-size:11.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--ink-muted);margin-bottom:6px}
+
+/* gallery */
+.gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:14px 0}
+.gallery figure{margin:0}
+.gallery img{width:100%;aspect-ratio:16/10;object-fit:cover;border-radius:6px;display:block;background:var(--tag-bg)}
+.gallery figure:first-child{grid-column:span 2;grid-row:span 2}
+.gallery figure:first-child img{aspect-ratio:auto;height:100%}
+
+footer{border-top:1px solid var(--line);padding:24px 0 48px;font-size:14px;color:var(--ink-soft)}
+.links{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}
+.btn{display:inline-block;padding:8px 14px;border-radius:6px;border:1px solid var(--line);background:var(--panel);
+  color:var(--ink-1);text-decoration:none;font-size:14.5px;font-weight:600}
+.btn:hover{border-color:var(--action);color:var(--action)}
+.btn.primary{background:var(--action);border-color:var(--action);color:#fff}
+.btn.primary:hover{background:var(--action-hover);color:#fff}
+.todo{background:var(--warn-bg);border:1px dashed var(--warn-line);border-radius:6px;padding:10px 14px;font-size:14.5px}
+
+@media (max-width:860px){
+  .tiles{grid-template-columns:repeat(2,1fr)}
+  .figrow,.q4{grid-template-columns:1fr}
+  .lane{grid-template-columns:1fr;gap:4px}
+  .gallery{grid-template-columns:1fr 1fr}
+}
+@media (max-width:480px){
+  body{font-size:16px}
+  .tile .v{font-size:28px}
+  .arrow{display:none}
+}
+/*FIGCSS*/
+.fig{width:100%;height:auto;display:block;font-family:var(--font-display);overflow:visible}
+.fig .grid{stroke:var(--grid);stroke-width:1}
+.fig .axis{stroke:var(--axis);stroke-width:1}
+.fig .ref{stroke:var(--s2);stroke-width:1;opacity:.55}
+.fig .tick{fill:var(--ink-muted);font-size:11px;font-family:var(--font-mono)}
+.fig .lab{fill:var(--ink-2);font-size:12.5px}
+.fig .lab.strong{fill:var(--ink-1);font-weight:700}
+.fig .sub{font-size:9px}
+.fig .val{fill:var(--ink-1);font-size:12.5px;font-weight:700;font-family:var(--font-mono)}
+.fig .bar.s1{fill:var(--s1)} .fig .bar.s2{fill:var(--s2)} .fig .bar.base{fill:var(--base)}
+.fig .line{fill:none;stroke-width:2;stroke-linejoin:round;stroke-linecap:round}
+.fig .line.s1{stroke:var(--s1)}
+.fig .dot.s2{fill:var(--s2)} .fig .ring{fill:var(--surface)}
+.fig .hit{fill:transparent}
+.fig .mark:hover .bar{filter:brightness(1.12)}
+.fig .mark:hover .hit{fill:var(--hover)}
+/*/FIGCSS*/
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="topbar">
+      <span><span class="dot"></span>OSI Hackathon 2026 · Auckland hub</span>
+      <span><a href="https://github.com/drai-inn/surrogate-chain">github.com/drai-inn/surrogate-chain</a></span>
+    </div>
+    <h1>How far can a chain of surrogates take us in biomolecular interactions?</h1>
+    <p class="lead">Physiological outcomes come from molecules interacting. Those interactions produce functional change. Function is driven by spatial and structural change. Pharmacology is the effect of drugs on that system.</p>
+    <p class="lead soft">Association models over sequence, 3D-aware models over structure, interatomic potentials over atoms and motion, multi-scale models over cells and tissue. Most are open-weight and most arrived recently. Most of us know our own rung. In two days we climbed two of them, and measured how far each one can be trusted.</p>
+    <div class="video">
+      <video controls preload="metadata" playsinline poster="assets/video/poster.jpg">
+        <source src="assets/video/surrogate-chain.mp4" type="video/mp4">
+        <track kind="captions" srclang="en" label="English" src="assets/video/surrogate-chain.vtt">
+      </video>
+    </div>
+    <p class="video-links">Video, 3½ minutes, captions burned in · <a href="video/script.md">transcript</a> · <a href="writeup.pdf">one-page write-up (PDF)</a></p>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="tiles" aria-label="Headline results">
+    <div class="tile"><div class="k">Screening</div><div class="v">925M</div><div class="d">ZINC molecules scored in 4 h 27 min on one workspace, about 540× faster than docking them.</div></div>
+    <div class="tile"><div class="k">Against docking</div><div class="v">35.0%</div><div class="d">of the docking top 1M recovered, against 32.3% for AMPL and 1.2% for random picks.</div></div>
+    <div class="tile"><div class="k">Cost</div><div class="v">381×</div><div class="d">fewer GPU hours than AMPL to score a 98.3M-molecule pool. Training 27× faster.</div></div>
+    <div class="tile"><div class="k">Atoms to a cell</div><div class="v">−91.30 mV</div><div class="d">KcsA reversal potential from the bond graph, equal to Nernst E<sub>K</sub> to within 10<sup>−11</sup> mV.</div></div>
+  </div>
+</div>
+
+<main class="wrap">
+
+<section id="introduction" class="col">
+  <h2><span class="n">01</span>Introduction</h2>
+  <p>Biology has a ladder of scales: sequence, structure, atoms in motion, cells and tissue. Machine learning now has a ladder running alongside it. Each rung of that second ladder is a <em>surrogate</em>: it stands in for a calculation that is too expensive to run at the scale you need, such as docking a billion molecules or sampling the rare events of an ion crossing a membrane. Chain enough of them and you could, in principle, go from a compound to its physiological effect.</p>
+  <p>The Auckland hub asked how far up that ladder you can climb before you stop trusting the answer. Two groups took rungs at opposite ends:</p>
+  <ul>
+    <li><span class="rung">Rung 1</span><b>Screening at scale.</b> A graph-network surrogate for docking, fast enough to rank a billion-molecule library on one machine.</li>
+    <li><span class="rung">Rung 2</span><b>From atoms to a cell.</b> A pipeline that turns molecular dynamics into a thermodynamically consistent model that a cell-scale physiology model can run. Nothing at the 2025 event carried a molecular signal this far.</li>
+  </ul>
+  <p>Both were held to the hub's four questions: <i>what's the ground truth, what's the simple baseline, what would change our mind, and where would it break?</i></p>
+
+  <div class="chain" role="img" aria-label="The two chains of surrogates built at the hackathon">
+    <div class="lane"><div class="who">Rung 1 · screening</div>
+      <div class="steps">
+        <div class="step">ZINC library<small>~1B molecules</small></div><span class="arrow">→</span>
+        <div class="step hl">AttentiveFP surrogate<small>trained on docking scores</small></div><span class="arrow">→</span>
+        <div class="step">top 1M picks<small>ranked</small></div><span class="arrow">→</span>
+        <div class="step">docking<small>confirms the top</small></div>
+      </div></div>
+    <div class="lane"><div class="who">Rung 2 · atoms to a cell</div>
+      <div class="steps">
+        <div class="step">MD trajectory<small>+ coordinates</small></div><span class="arrow">→</span>
+        <div class="step">D measured<small>2nd Kramers–Moyal</small></div><span class="arrow">→</span>
+        <div class="step hl">F learned<small>port-Hamiltonian NN</small></div><span class="arrow">→</span>
+        <div class="step">states &amp; barriers<small>spectral gap, saddles</small></div><span class="arrow">→</span>
+        <div class="step hl">bond graph<small>+ electrical port</small></div><span class="arrow">→</span>
+        <div class="step">CellML 2.0<small>into a cell model</small></div>
+      </div></div>
+  </div>
+</section>
+
+<section id="methods" class="col">
+  <h2><span class="n">02</span>Methods</h2>
+
+  <h3><span class="rung">Rung 1</span>VDSAI Lightning: a docking surrogate at billion-molecule scale</h3>
+  <p>The surrogate predicts a docking fitness score from the 2D molecular graph, so that only the compounds it ranks highest are docked. It runs inside an active-learning loop: train on docked compounds, screen the library, dock the top picks, repeat. <b>VDSAI Lightning</b> replaces the incumbent AMPL GraphConv stack (TensorFlow) with an <b>AttentiveFP</b> network in <b>PyTorch Geometric</b> and <b>PyTorch Lightning</b>, logged to MLflow.</p>
+  <ul>
+    <li><b>Data.</b> A 3.5M-molecule training set (active-learning round 4), a 0.5M Enamine diversity set, the round-3 training set (2.28M rows), and <code>pool_3</code>, a 98.3M-molecule chunk of ZINC, for the head-to-head. Then the full 925M-molecule ZINC screen.</li>
+    <li><b>Protocol.</b> Scaffold split, seed 42, test set evaluated once. Both stacks trained on each dataset. Wall clock is compute time with queueing excluded.</li>
+    <li><b>Tuning.</b> An Optuna study built into the pipeline (<code>vdsai tune</code>): 40 trials of 40 epochs each, scored on validation only, with a median pruner after 10 epochs. The best settings were retrained for 100 epochs.</li>
+    <li><b>Ground truth.</b> The docking of all of <code>pool_3</code>. Its top 1M rows hold 972,954 distinct compounds. Recall is the share of those that appear in a model's top 1M picks. None was in either model's training set: 545 overlap, and removing them changes nothing.</li>
+    <li><b>Baselines.</b> Random picks, ranking by heavy-atom count, and AMPL. We also docked the same chunk twice to measure the noise ceiling.</li>
+  </ul>
+
+  <h3><span class="rung">Rung 2</span>Structure to physiology: MD → learned landscape → bond graph → CellML</h3>
+  <p>The pipeline consumes trajectories and a definition of the coordinates of interest. Nothing in it is specific to one molecule.</p>
+  <ol>
+    <li><b>Measure D first, then learn F.</b> If both are learned from displacements, only the product D·∇F is identified, and the network trades one off against the other. So the diffusivity D comes from the second Kramers–Moyal moment, without reference to F, and is frozen. A port-Hamiltonian network then learns F from the drift −D∇F.</li>
+    <li><b>The second law is structural.</b> With D positive semi-definite and F a scalar potential, dF/dt = −∇Fᵀ D ∇F ≤ 0 for any weights at any point in training. It is never a penalty term.</li>
+    <li><b>Let the dynamics choose the states.</b> States come from the MSM spectral gap, and barriers from a minimax saddle search, with rates following ln κ ≈ ln D − βF‡.</li>
+    <li><b>Bond graph with an electrical port.</b> Ce/Re components on 0/1 junctions, after Hunter et al. (<a href="https://doi.org/10.1101/2024.06.26.600892">bioRxiv 2024.06.26.600892</a>). Each hop carries a fraction of the field, z<sub>r</sub> = z<sub>ion</sub>(δ<sub>j</sub> − δ<sub>i</sub>), which telescopes to exactly one charge around the cycle. Charge closure is built in rather than assumed.</li>
+    <li><b>Write CellML 2.0</b>, validated with libcellml, ready to compose into heart or kidney cell models.</li>
+  </ol>
+  <p><b>Systems.</b> An analytic double well, where the answer is known exactly. Alanine dipeptide, for validation against an independent MSM (deeptime). A 4D model system, for scaling. The <b>KcsA</b> potassium channel as the application, with site positions and pore radius measured from the 1K4C crystal structure. For KcsA the free-energy surface is a literature-constrained analytic stand-in, fixed to Bernèche &amp; Roux's 2–3 kcal/mol maximum barrier. Only D comes from our filter MD. Every artifact records which half came from where.</p>
+  <p><b>Not fooling ourselves.</b> Every test has a control that must give the wrong answer. Every bug found gets a regression test. A mutation audit breaks the code on purpose to check that the suite notices.</p>
+</section>
+
+<section id="results">
+  <div class="col"><h2><span class="n">03</span>Results</h2></div>
+
+  <figure>
+    <div class="figrow">
+      <div class="card">
+        <h4>(a) Recall of the docking top 1M</h4>
+        <p class="sub">pool_3 · 98,271,339 ZINC molecules · 1M picks each</p>
+        <div class="legend"><span><i style="background:var(--s1)"></i>VDSAI Lightning</span><span><i style="background:var(--s2)"></i>AMPL</span><span><i style="background:var(--base)"></i>simple baselines</span></div>
+<!--FIG:recall-->
+<svg class="fig" viewBox="0 0 560 196" role="img" aria-labelledby="fig-recall-t fig-recall-d">
+<title id="fig-recall-t">Recall of the docking top 1M on pool_3</title>
+<desc id="fig-recall-d">VDSAI Lightning 35.0%, AMPL 32.3%, rank by heavy-atom count 2.6%, random 1.2%.</desc>
+<line class="grid" x1="128.0" x2="128.0" y1="8" y2="150"/>
+<text class="tick" x="128.0" y="164" text-anchor="middle">0%</text>
+<line class="grid" x1="223.0" x2="223.0" y1="8" y2="150"/>
+<text class="tick" x="223.0" y="164" text-anchor="middle">10%</text>
+<line class="grid" x1="318.0" x2="318.0" y1="8" y2="150"/>
+<text class="tick" x="318.0" y="164" text-anchor="middle">20%</text>
+<line class="grid" x1="413.0" x2="413.0" y1="8" y2="150"/>
+<text class="tick" x="413.0" y="164" text-anchor="middle">30%</text>
+<line class="grid" x1="508.0" x2="508.0" y1="8" y2="150"/>
+<text class="tick" x="508.0" y="164" text-anchor="middle">40%</text>
+<g class="mark"><title>VDSAI Lightning: 35.0%</title><rect class="hit" x="0" y="3.0" width="560" height="38"/><path class="bar s1" d="M128,12 H456.5 Q460.5,12 460.5,16 V28 Q460.5,32 456.5,32 H128 Z"/></g>
+<text class="lab" x="118" y="26.5" text-anchor="end">VDSAI Lightning</text>
+<text class="val" x="468.5" y="26.5">35.0%</text>
+<g class="mark"><title>AMPL: 32.3%</title><rect class="hit" x="0" y="41.0" width="560" height="38"/><path class="bar s2" d="M128,50 H430.9 Q434.9,50 434.9,54 V66 Q434.9,70 430.9,70 H128 Z"/></g>
+<text class="lab" x="118" y="64.5" text-anchor="end">AMPL</text>
+<text class="val" x="442.9" y="64.5">32.3%</text>
+<g class="mark"><title>Rank by size: 2.6%</title><rect class="hit" x="0" y="79.0" width="560" height="38"/><path class="bar base" d="M128,88 H148.7 Q152.7,88 152.7,92 V104 Q152.7,108 148.7,108 H128 Z"/></g>
+<text class="lab" x="118" y="102.5" text-anchor="end">Rank by size</text>
+<text class="val" x="160.7" y="102.5">2.6%</text>
+<g class="mark"><title>Random picks: 1.2%</title><rect class="hit" x="0" y="117.0" width="560" height="38"/><path class="bar base" d="M128,126 H135.4 Q139.4,126 139.4,130 V142 Q139.4,146 135.4,146 H128 Z"/></g>
+<text class="lab" x="118" y="140.5" text-anchor="end">Random picks</text>
+<text class="val" x="147.4" y="140.5">1.2%</text>
+<line class="axis" x1="128" x2="128" y1="8" y2="150"/>
+</svg>
+<!--/FIG:recall-->
+      </div>
+      <div class="card">
+        <h4>(b) KcsA current–voltage curve from the bond graph</h4>
+        <p class="sub">140 mM K⁺ in · 4 mM out · 298 K</p>
+<!--FIG:iv-->
+<svg class="fig" viewBox="0 0 560 250" role="img" aria-labelledby="fig-iv-t fig-iv-d">
+<title id="fig-iv-t">KcsA model current against membrane voltage</title>
+<desc id="fig-iv-d">Steady-state current from the electrogenic bond graph, 140 mM K+ inside, 4 mM outside. It crosses zero at -91.30 mV, the Nernst potential for K+.</desc>
+<line class="grid" x1="52.0" x2="52.0" y1="14" y2="210"/>
+<text class="tick" x="52.0" y="226" text-anchor="middle">-200</text>
+<line class="grid" x1="175.0" x2="175.0" y1="14" y2="210"/>
+<text class="tick" x="175.0" y="226" text-anchor="middle">-100</text>
+<line class="grid" x1="298.0" x2="298.0" y1="14" y2="210"/>
+<text class="tick" x="298.0" y="226" text-anchor="middle">0</text>
+<line class="grid" x1="421.0" x2="421.0" y1="14" y2="210"/>
+<text class="tick" x="421.0" y="226" text-anchor="middle">100</text>
+<line class="grid" x1="544.0" x2="544.0" y1="14" y2="210"/>
+<text class="tick" x="544.0" y="226" text-anchor="middle">200</text>
+<line class="grid" x1="52" x2="544" y1="185.5" y2="185.5"/>
+<text class="tick" x="44" y="189.5" text-anchor="end">0.0</text>
+<line class="grid" x1="52" x2="544" y1="136.5" y2="136.5"/>
+<text class="tick" x="44" y="140.5" text-anchor="end">0.4</text>
+<line class="grid" x1="52" x2="544" y1="87.5" y2="87.5"/>
+<text class="tick" x="44" y="91.5" text-anchor="end">0.8</text>
+<line class="grid" x1="52" x2="544" y1="38.5" y2="38.5"/>
+<text class="tick" x="44" y="42.5" text-anchor="end">1.2</text>
+<line class="axis" x1="52" x2="544" y1="185.5" y2="185.5"/>
+<polyline class="line s1" points="52.0,196.8 58.1,196.5 64.3,196.2 70.5,195.8 76.6,195.5 82.7,195.1 88.9,194.7 95.0,194.3 101.2,193.9 107.3,193.5 113.5,193.0 119.6,192.6 125.8,192.1 131.9,191.6 138.1,191.1 144.2,190.5 150.4,189.9 156.6,189.3 162.7,188.6 168.8,187.8 175.0,187.0 181.1,186.2 187.3,185.3 193.4,184.3 199.6,183.2 205.7,182.0 211.9,180.8 218.1,179.5 224.2,178.0 230.3,176.5 236.5,174.9 242.7,173.1 248.8,171.2 254.9,169.3 261.1,167.2 267.2,165.0 273.4,162.7 279.6,160.3 285.7,157.8 291.9,155.2 298.0,152.5 304.1,149.7 310.3,146.8 316.4,143.8 322.6,140.8 328.8,137.7 334.9,134.6 341.1,131.4 347.2,128.2 353.4,124.9 359.5,121.6 365.6,118.3 371.8,115.0 377.9,111.6 384.1,108.2 390.2,104.8 396.4,101.4 402.6,98.0 408.7,94.5 414.9,91.1 421.0,87.7 427.1,84.3 433.3,80.8 439.4,77.4 445.6,74.0 451.8,70.5 457.9,67.1 464.1,63.7 470.2,60.3 476.4,56.9 482.5,53.4 488.6,50.0 494.8,46.6 500.9,43.2 507.1,39.8 513.2,36.5 519.4,33.1 525.5,29.7 531.7,26.3 537.9,22.9 544.0,19.6"/>
+<g class="mark"><title>-200 mV: -0.09 pA</title><circle class="hit" cx="52.0" cy="196.8" r="9"/></g>
+<g class="mark"><title>-180 mV: -0.08 pA</title><circle class="hit" cx="76.6" cy="195.5" r="9"/></g>
+<g class="mark"><title>-160 mV: -0.07 pA</title><circle class="hit" cx="101.2" cy="193.9" r="9"/></g>
+<g class="mark"><title>-140 mV: -0.05 pA</title><circle class="hit" cx="125.8" cy="192.1" r="9"/></g>
+<g class="mark"><title>-120 mV: -0.04 pA</title><circle class="hit" cx="150.4" cy="189.9" r="9"/></g>
+<g class="mark"><title>-100 mV: -0.01 pA</title><circle class="hit" cx="175.0" cy="187.0" r="9"/></g>
+<g class="mark"><title>-80 mV: 0.02 pA</title><circle class="hit" cx="199.6" cy="183.2" r="9"/></g>
+<g class="mark"><title>-60 mV: 0.06 pA</title><circle class="hit" cx="224.2" cy="178.0" r="9"/></g>
+<g class="mark"><title>-40 mV: 0.12 pA</title><circle class="hit" cx="248.8" cy="171.2" r="9"/></g>
+<g class="mark"><title>-20 mV: 0.19 pA</title><circle class="hit" cx="273.4" cy="162.7" r="9"/></g>
+<g class="mark"><title>0 mV: 0.27 pA</title><circle class="hit" cx="298.0" cy="152.5" r="9"/></g>
+<g class="mark"><title>20 mV: 0.36 pA</title><circle class="hit" cx="322.6" cy="140.8" r="9"/></g>
+<g class="mark"><title>40 mV: 0.47 pA</title><circle class="hit" cx="347.2" cy="128.2" r="9"/></g>
+<g class="mark"><title>60 mV: 0.58 pA</title><circle class="hit" cx="371.8" cy="115.0" r="9"/></g>
+<g class="mark"><title>80 mV: 0.69 pA</title><circle class="hit" cx="396.4" cy="101.4" r="9"/></g>
+<g class="mark"><title>100 mV: 0.80 pA</title><circle class="hit" cx="421.0" cy="87.7" r="9"/></g>
+<g class="mark"><title>120 mV: 0.91 pA</title><circle class="hit" cx="445.6" cy="74.0" r="9"/></g>
+<g class="mark"><title>140 mV: 1.02 pA</title><circle class="hit" cx="470.2" cy="60.3" r="9"/></g>
+<g class="mark"><title>160 mV: 1.13 pA</title><circle class="hit" cx="494.8" cy="46.6" r="9"/></g>
+<g class="mark"><title>180 mV: 1.24 pA</title><circle class="hit" cx="519.4" cy="33.1" r="9"/></g>
+<g class="mark"><title>200 mV: 1.35 pA</title><circle class="hit" cx="544.0" cy="19.6" r="9"/></g>
+<line class="ref" x1="185.7" x2="185.7" y1="14" y2="210"/>
+<g class="mark"><title>Reversal -91.30 mV; Nernst E_K -91.30 mV</title><circle class="ring" cx="185.7" cy="185.5" r="7"/><circle class="dot s2" cx="185.7" cy="185.5" r="5"/></g>
+<text class="lab strong" x="177.7" y="30" text-anchor="end">E<tspan class="sub" dy="3">rev</tspan><tspan dy="-3"> = -91.30 mV</tspan></text>
+<text class="lab" x="177.7" y="48" text-anchor="end">= Nernst E<tspan class="sub" dy="3">K</tspan></text>
+<text class="tick" x="298.0" y="246" text-anchor="middle">membrane voltage (mV)</text>
+<text class="tick" x="12" y="112.0" text-anchor="middle" transform="rotate(-90 12 112.0)">current (pA)</text>
+</svg>
+<!--/FIG:iv-->
+      </div>
+    </div>
+    <figcaption class="col"><b>Figure 1.</b> Two rungs, each checked against an independent truth. <b>(a)</b> The screening surrogate against docking. Docking itself is noisy: two runs of the same chunk correlate at only 0.30. <b>(b)</b> The physiology component. The model's zero-current voltage lands on the Nernst potential for K⁺ only if charge and energy are conserved end to end. Data in <a href="data/">data/</a>; panel (b) recomputed from <a href="https://github.com/jmdowrick/hackathon2026">the team code</a> by <a href="tools/kcsa_data.py">tools/kcsa_data.py</a>.</figcaption>
+  </figure>
+
+  <div class="col">
+  <h3><span class="rung">Rung 1</span>Faster and better than the incumbent</h3>
+  <div class="scroll"><table class="tbl">
+    <thead><tr><th>Head-to-head</th><th>Lightning</th><th>AMPL</th><th>Difference</th></tr></thead>
+    <tbody>
+      <tr><td>3.5M set: training wall clock</td><td class="b">2 h 26 min</td><td>32 h 26 min</td><td>13.3× faster</td></tr>
+      <tr><td>3.5M set: test R² / RMSE / MAE (tuned)</td><td class="b">0.752 / 4.41 / 3.43</td><td>0.690 / 4.61 / 3.62</td><td>better on all three</td></tr>
+      <tr><td>0.5M Enamine: training wall clock</td><td class="b">9 min 27 s</td><td>1 h 57 min</td><td>12.4× faster</td></tr>
+      <tr><td>0.5M Enamine: test R²</td><td class="b">0.575</td><td>0.565</td><td>+0.009</td></tr>
+      <tr><td>pool_3: training, end to end</td><td class="b">56 min</td><td>25 h 22 min</td><td>27× faster</td></tr>
+      <tr><td>pool_3: recall of docking top 1M</td><td class="b">35.0%</td><td>32.3%</td><td>+2.7 points</td></tr>
+      <tr><td>pool_3: same, at AMPL's 923,678 distinct</td><td class="b">33.4%</td><td>32.3%</td><td>+1.1 points</td></tr>
+      <tr><td>pool_3: docking top 100k found</td><td class="b">60.4%</td><td>56.4%</td><td>+4.0 points</td></tr>
+      <tr><td>pool_3: GPU hours to score</td><td class="b">0.44</td><td>166.4</td><td>381× fewer</td></tr>
+      <tr><td>pool_3: time to score, as run</td><td class="b">26 min (1 GPU)</td><td>4 d 9 h (5 L4 jobs)</td><td>241× faster</td></tr>
+    </tbody>
+  </table></div>
+  <p class="small">Rank by size recovers 2.6% and random picks 1.2%. AMPL's top 1M rows hold 923,678 distinct compounds because it scores protonation states as separate rows. The two stacks' data preparation differs, so the 3.5M-set test sets are not identical (163,972 against 118,864 molecules). The pool_3 comparison is close to like-for-like.</p>
+  <p>Tuning helped through a larger encoder (hidden size 128 → 256, 3 → 4 graph layers) and much lighter regularisation (dropout 0.20 → 0.002, weight decay 10⁻⁴ → 4×10⁻⁶). Early enrichment improved with it: EF<sub>1%</sub> 7.19 → 7.48, BEDROC 0.699 → 0.717. With the tuned model, <b>925 million ZINC molecules were scored in 4 h 27 min</b> on one workspace. Docking the same library takes about 100 days, and AMPL was estimated at 600 GPU hours. It is the first time this group could screen a library this size.</p>
+  <div class="callout"><strong>No surrogate can reach 100% here.</strong> Docking is stochastic. Two dockings of the same chunk correlate at only 0.30 on shared compounds, differ by 3.8 fitness units on average, and agree exactly on 0.3%. So 35% is recall against a noisy target. The next gains will come from better ground truth as much as from better models.</div>
+
+  <h3><span class="rung">Rung 2</span>A physiology component that inherits its physics</h3>
+  <ul>
+    <li><b>Instrument check.</b> On the toy system D is recovered to 0.5%. The learned landscape correlates at 0.984 with a potential the network never saw. A 4D potential is recovered at r &gt; 0.9 with fewer than 10k parameters, at a cost that grows with frames rather than with the number of coordinates.</li>
+    <li><b>Admissible versus merely accurate.</b> On cycles of the state graph the structured model's affinity residual is ~10⁻¹⁵. An unconstrained neural SDE that fits the data about as well gives ~10⁻⁴ on contractible cycles and ~10⁻² on winding cycles. Both fit. Only one is physically admissible.</li>
+    <li><b>A measurement, not a failure.</b> On alanine dipeptide the bond-graph and MSM slowest timescales differ about 17×. That gap is reconciled exactly by D measured at a ~125 ps lag, the memory time of (φ, ψ). On the truly Markovian toy the same diagnostic returns ≈ 1.</li>
+    <li><b>What sets the rates.</b> ln κ ≈ ln D − βF‡ was derived and then measured. Saddle features give R² = 0.871 against 0.793 for endpoint free energies. Barrier-aware features cut κ-transfer error from 1.80 to 1.17 RMSE. Cheap endpoint-only rate surrogates fail for a reason.</li>
+    <li><b>KcsA.</b> Sites come from the 1K4C structure; S0 sits 1.3 Å further out than uniform spacing implies. The reversal potential matches Nernst across a 100-fold range of external K⁺, and the CellML carries the electrical port and validates with libcellml.</li>
+  </ul>
+  <div class="scroll"><table class="tbl" aria-label="Reversal potential against Nernst across external potassium">
+    <thead><tr><th>[K⁺]<sub>out</sub> (mM), 140 in</th><th>1.4</th><th>4</th><th>14</th><th>40</th><th>140</th></tr></thead>
+    <tbody>
+      <tr><td>Model E<sub>rev</sub> (mV)</td><td>−118.259</td><td class="b">−91.300</td><td>−59.130</td><td>−32.171</td><td>0.000</td></tr>
+      <tr><td>Nernst E<sub>K</sub> (mV)</td><td>−118.259</td><td>−91.300</td><td>−59.130</td><td>−32.171</td><td>0.000</td></tr>
+      <tr><td>|difference| (mV)</td><td>3×10⁻¹²</td><td>8×10⁻¹³</td><td>1×10⁻¹¹</td><td>4×10⁻¹³</td><td>2×10⁻¹⁴</td></tr>
+    </tbody>
+  </table></div>
+  <p class="small">Recomputed in this repository from the team code; values in <a href="data/kcsa_permeation.json">data/kcsa_permeation.json</a>.</p>
+
+  <h3>What didn't work, stated up front</h3>
+  <ul>
+    <li><b>The KcsA landscape is constrained, not learned.</b> It is fixed to published barrier heights. The figures are "consistent with the published PMF", not "the published PMF".</li>
+    <li><b>Trapped ions can't pin down barriers.</b> Filter ions in our closed-gate MD visit 6 of 40 bins and never cross between sites. F at the barriers is extrapolation, and ln κ depends on exactly that.</li>
+    <li><b>Conductance is about 20× low:</b> 4.5 pS slope conductance against ~100 pS experimental. The model is single-ion, KcsA conducts by multi-ion knock-on, and fixed-charge force fields independently run 2–10× low. Pooling ions into one coordinate makes an MSM report ~3 metastable states where there is 1, and the MSM's own tests cannot detect this.</li>
+    <li><b>So we moved to gramicidin A</b>, a single-file channel where one ion at a time is the right model. It is now built from 1JNO in a DMPC bilayer: 25,388 atoms, 0.15 M KCl, Amber ff14SB/lipid17. Equilibration passes all eight blocking checks. Area per lipid is 59.3 Å² against 60.6 experimental, backbone RMSD 0.52 Å, with 11 waters in the pore. Production runs at ~100 ns/day on a laptop GPU.</li>
+  </ul>
+  <p class="small">Engineering: a fast test suite that runs in seconds, a regression test for every bug hit, and a mutation audit that catches 12 of 14 deliberate breakages on the fast tier. Six of the twelve catalogued bugs produced plausible wrong numbers with no error. Details are in the team repo's <a href="https://github.com/jmdowrick/hackathon2026/blob/main/HANDOVER.md">HANDOVER.md</a>.</p>
+
+  <h3>The four questions, answered</h3>
+  <div class="q4">
+    <div class="card"><div class="qq">Ground truth</div>
+      <p><b>Rung 1:</b> docking of the full 98.3M-molecule pool_3, measured twice to get its noise.</p>
+      <p><b>Rung 2:</b> exact toy potentials and D, an independent MSM, the Nernst equation, and experimental conductance.</p></div>
+    <div class="card"><div class="qq">Simple baseline</div>
+      <p><b>Rung 1:</b> random (1.2%), rank by size (2.6%), and the incumbent AMPL (32.3%).</p>
+      <p><b>Rung 2:</b> an unconstrained neural SDE that fits as well and violates thermodynamics.</p></div>
+    <div class="card"><div class="qq">What would change our mind</div>
+      <p><b>Rung 1:</b> recall that did not beat AMPL at equal distinct compounds. It still does, by 1.1 points.</p>
+      <p><b>Rung 2:</b> a reversal potential off Nernst, or a cycle residual above 10⁻¹⁰.</p></div>
+    <div class="card"><div class="qq">Where it breaks</div>
+      <p><b>Rung 1:</b> at the docking noise ceiling, and wherever docking itself is wrong.</p>
+      <p><b>Rung 2:</b> at barriers MD never samples, and on multi-ion channels with a single-ion model.</p></div>
+  </div>
+  </div>
+</section>
+
+<section id="conclusions" class="col">
+  <h2><span class="n">04</span>Conclusions</h2>
+  <p><b>A surrogate can be faster and better than the incumbent at the same time.</b> Lightning trains 12–27× faster, scores a pool with 381× fewer GPU hours, and recovers more of the docking top set than AMPL. Billion-molecule screening goes from a multi-day cluster campaign to an afternoon on one machine. The ceiling is now the ground truth: docking agrees with itself at r = 0.30.</p>
+  <p><b>Physics can be carried from atoms to a physiology component as an architectural invariant.</b> Measuring D first makes the learned landscape identifiable. Building the bond graph from it makes the second law, detailed balance and charge closure hold by construction. The output is a CellML model a cell model can import, and its reversal potential is a check that a broken model fails.</p>
+  <p><b>Each link is only as good as its hardest region.</b> For docking surrogates that is the top tail. For MD-derived models it is the barrier. Saying where each link breaks is what makes the chain usable.</p>
+  <p>So how far can a chain of surrogates take us? Further than we expected, as long as every link carries its own evidence.</p>
+</section>
+
+<section id="future" class="col">
+  <h2><span class="n">05</span>Future directions</h2>
+  <ol>
+    <li><b>Join the rungs.</b> Lightning's top picks go to a co-folding or pose model (Boltz-2, OpenFold3), then MD with a classical or machine-learned potential, then the bond graph, then a cell model. The result is a compound-to-physiology chain in which every link reports its own uncertainty.</li>
+    <li><b>Raise the screening ceiling.</b> Use repeat or consensus docking as a cleaner target, add 3D-aware or MLIP rescoring of the top tail, and keep Lightning in the active-learning loop. Compare against sequence models (ChemBERTa-2, MolFormer) at equal tuning budget.</li>
+    <li><b>Learn the barrier, not just the wells.</b> Run gramicidin A production MD, then an SRV progress coordinate, then weighted-ensemble sampling (WESTPA) across the barrier. A learned landscape then replaces the literature surface. After that, permutation-invariant multi-ion coordinates take KcsA back on properly.</li>
+    <li><b>Perturbations as physiology.</b> Model drug block and mutations as changes to the bond graph's parameters, and compose the channel into a cardiac or renal cell model to see the effect at the scale pharmacology cares about.</li>
+    <li><b>Share the evaluation, not just the models.</b> Release both harnesses so other surrogates can be held to the same four questions.</li>
+  </ol>
+</section>
+
+<section id="event" class="col">
+  <h2><span class="n">06</span>The event</h2>
+  <p>Run by the Auckland hub of the global <a href="https://llmhackathon.github.io/">Open Scientific Intelligence Hackathon</a>, hosted by Waipapa Taumata Rau, University of Auckland. Hub site: <a href="https://drai-inn.github.io/osi-hackathon-auckland/">drai-inn.github.io/osi-hackathon-auckland</a>.</p>
+  <div class="gallery" id="gallery">
+    <figure><img src="assets/photos/event-1.jpg" alt="The team working around the table at the Auckland hub" loading="lazy" onerror="this.parentElement.remove()"></figure>
+    <figure><img src="assets/photos/event-2.jpg" alt="A remote talk on the room's screen" loading="lazy" onerror="this.parentElement.remove()"></figure>
+    <figure><img src="assets/photos/event-3.jpg" alt="Small groups at work" loading="lazy" onerror="this.parentElement.remove()"></figure>
+    <figure><img src="assets/photos/event-4.jpg" alt="Discussion around the table" loading="lazy" onerror="this.parentElement.remove()"></figure>
+    <figure><img src="assets/photos/event-5.jpg" alt="A video call with a remote contributor" loading="lazy" onerror="this.parentElement.remove()"></figure>
+  </div>
+
+  <h3>Team</h3>
+  <p class="todo"><b>To fill in:</b> names, affiliations and which rung each person worked on.</p>
+
+  <h3>Code, data and platforms</h3>
+  <div class="links">
+    <a class="btn primary" href="https://github.com/jmdowrick/hackathon2026">Structure to physiology: code</a>
+    <a class="btn" href="https://github.com/drai-inn/surrogate-chain">This write-up: repo</a>
+    <a class="btn" href="writeup.pdf">One-page PDF</a>
+  </div>
+  <p class="small">VDSAI Lightning is reported from its results; its code is not public. Platforms and tools: PyTorch Geometric, PyTorch Lightning, Optuna, MLflow, AMPL (baseline), NeSI HPC (H100 and L4 GPUs), OpenMM, deeptime, libcellml, ZINC and Enamine libraries, and Claude Code for agentic development.</p>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    How far can a chain of surrogates take us? OSI Hackathon 2026, Auckland hub. Text and figures CC BY 4.0, code MIT.
+    Figures use data transcribed from the teams' reports (<a href="data/lightning.json">data/lightning.json</a>) and recomputed from the team code (<a href="data/kcsa_permeation.json">data/kcsa_permeation.json</a>).
+  </div>
+</footer>
+</body>
+</html>
