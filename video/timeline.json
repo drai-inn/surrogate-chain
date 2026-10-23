@@ -1,0 +1,544 @@
+{
+ "fps": 30,
+ "scenes": [
+  {
+   "id": "question",
+   "label": "01 \u00b7 The question",
+   "start": 0.0,
+   "end": 18.638
+  },
+  {
+   "id": "ladder",
+   "label": "02 \u00b7 The ladder",
+   "start": 19.438,
+   "end": 40.169
+  },
+  {
+   "id": "screening",
+   "label": "03 \u00b7 Rung one: screening a billion molecules",
+   "start": 40.969,
+   "end": 94.518
+  },
+  {
+   "id": "physiology",
+   "label": "04 \u00b7 Rung two: from atoms to a cell",
+   "start": 95.318,
+   "end": 148.452
+  },
+  {
+   "id": "honesty",
+   "label": "05 \u00b7 How we tried not to fool ourselves",
+   "start": 149.252,
+   "end": 178.028
+  },
+  {
+   "id": "close",
+   "label": "06 \u00b7 Where this goes",
+   "start": 178.828,
+   "end": 208.638
+  }
+ ],
+ "sentences": [
+  {
+   "id": "question-0",
+   "scene": "question",
+   "index": 0,
+   "start": 2.2,
+   "end": 5.619,
+   "cap": "Physiological outcomes come from molecules interacting.",
+   "chunks": [
+    {
+     "start": 2.2,
+     "end": 5.619,
+     "text": "Physiological outcomes come from molecules interacting."
+    }
+   ]
+  },
+  {
+   "id": "question-1",
+   "scene": "question",
+   "index": 1,
+   "start": 6.119,
+   "end": 11.487,
+   "cap": "Those interactions change function, and function is driven by changes in shape and structure.",
+   "chunks": [
+    {
+     "start": 6.119,
+     "end": 11.487,
+     "text": "Those interactions change function, and function is driven by changes in shape and structure."
+    }
+   ]
+  },
+  {
+   "id": "question-2",
+   "scene": "question",
+   "index": 2,
+   "start": 11.987,
+   "end": 15.137,
+   "cap": "Pharmacology is what drugs do to that whole system.",
+   "chunks": [
+    {
+     "start": 11.987,
+     "end": 15.137,
+     "text": "Pharmacology is what drugs do to that whole system."
+    }
+   ]
+  },
+  {
+   "id": "question-3",
+   "scene": "question",
+   "index": 3,
+   "start": 15.637,
+   "end": 18.138,
+   "cap": "So how far can a chain of surrogates take us?",
+   "chunks": [
+    {
+     "start": 15.637,
+     "end": 18.138,
+     "text": "So how far can a chain of surrogates take us?"
+    }
+   ]
+  },
+  {
+   "id": "ladder-0",
+   "scene": "ladder",
+   "index": 0,
+   "start": 19.438,
+   "end": 25.326,
+   "cap": "Biology has a ladder of scales: sequence, structure, atoms in motion, cells and tissue.",
+   "chunks": [
+    {
+     "start": 19.438,
+     "end": 25.326,
+     "text": "Biology has a ladder of scales: sequence, structure, atoms in motion, cells and tissue."
+    }
+   ]
+  },
+  {
+   "id": "ladder-1",
+   "scene": "ladder",
+   "index": 1,
+   "start": 25.826,
+   "end": 30.634,
+   "cap": "Machine learning now has a ladder alongside it, mostly open-weight, mostly new.",
+   "chunks": [
+    {
+     "start": 25.826,
+     "end": 30.634,
+     "text": "Machine learning now has a ladder alongside it, mostly open-weight, mostly new."
+    }
+   ]
+  },
+  {
+   "id": "ladder-2",
+   "scene": "ladder",
+   "index": 2,
+   "start": 31.134,
+   "end": 36.564,
+   "cap": "Each rung swaps an expensive physical calculation for a learned one, and the catch is trust.",
+   "chunks": [
+    {
+     "start": 31.134,
+     "end": 36.564,
+     "text": "Each rung swaps an expensive physical calculation for a learned one, and the catch is trust."
+    }
+   ]
+  },
+  {
+   "id": "ladder-3",
+   "scene": "ladder",
+   "index": 3,
+   "start": 37.064,
+   "end": 39.669,
+   "cap": "In two days in Auckland, we climbed two rungs.",
+   "chunks": [
+    {
+     "start": 37.064,
+     "end": 39.669,
+     "text": "In two days in Auckland, we climbed two rungs."
+    }
+   ]
+  },
+  {
+   "id": "screening-0",
+   "scene": "screening",
+   "index": 0,
+   "start": 40.969,
+   "end": 44.167,
+   "cap": "Docking a billion molecules takes about a hundred days.",
+   "chunks": [
+    {
+     "start": 40.969,
+     "end": 44.167,
+     "text": "Docking a billion molecules takes about a hundred days."
+    }
+   ]
+  },
+  {
+   "id": "screening-1",
+   "scene": "screening",
+   "index": 1,
+   "start": 44.667,
+   "end": 49.138,
+   "cap": "So you train a surrogate on docking scores, and dock only what it ranks highest.",
+   "chunks": [
+    {
+     "start": 44.667,
+     "end": 49.138,
+     "text": "So you train a surrogate on docking scores, and dock only what it ranks highest."
+    }
+   ]
+  },
+  {
+   "id": "screening-2",
+   "scene": "screening",
+   "index": 2,
+   "start": 49.638,
+   "end": 57.298,
+   "cap": "We rebuilt that surrogate: VDSAI Lightning, an AttentiveFP graph network replacing AMPL's GraphConv stack.",
+   "chunks": [
+    {
+     "start": 49.638,
+     "end": 57.298,
+     "text": "We rebuilt that surrogate: VDSAI Lightning, an AttentiveFP graph network replacing AMPL's GraphConv stack."
+    }
+   ]
+  },
+  {
+   "id": "screening-3",
+   "scene": "screening",
+   "index": 3,
+   "start": 57.798,
+   "end": 63.106,
+   "cap": "It trained 13\u00d7 faster, and after tuning it beat AMPL on every test metric.",
+   "chunks": [
+    {
+     "start": 57.798,
+     "end": 63.106,
+     "text": "It trained 13\u00d7 faster, and after tuning it beat AMPL on every test metric."
+    }
+   ]
+  },
+  {
+   "id": "screening-4",
+   "scene": "screening",
+   "index": 4,
+   "start": 63.606,
+   "end": 69.982,
+   "cap": "Then we scored 925 million molecules in under four and a half hours on a single workspace.",
+   "chunks": [
+    {
+     "start": 63.606,
+     "end": 69.982,
+     "text": "Then we scored 925 million molecules in under four and a half hours on a single workspace."
+    }
+   ]
+  },
+  {
+   "id": "screening-5",
+   "scene": "screening",
+   "index": 5,
+   "start": 70.482,
+   "end": 81.876,
+   "cap": "Head to head, Lightning recovered 35% of the true docking top million. AMPL recovered 32%, ranking by size 2.6%, random picks 1.2%.",
+   "chunks": [
+    {
+     "start": 70.482,
+     "end": 76.617,
+     "text": "Head to head, Lightning recovered 35% of the true docking top million."
+    },
+    {
+     "start": 76.617,
+     "end": 81.876,
+     "text": "AMPL recovered 32%, ranking by size 2.6%, random picks 1.2%."
+    }
+   ]
+  },
+  {
+   "id": "screening-6",
+   "scene": "screening",
+   "index": 6,
+   "start": 82.376,
+   "end": 86.222,
+   "cap": "And it used 381\u00d7 fewer GPU hours.",
+   "chunks": [
+    {
+     "start": 82.376,
+     "end": 86.222,
+     "text": "And it used 381\u00d7 fewer GPU hours."
+    }
+   ]
+  },
+  {
+   "id": "screening-7",
+   "scene": "screening",
+   "index": 7,
+   "start": 86.722,
+   "end": 94.018,
+   "cap": "Two dockings of the same molecules correlate at only 0.3, so the surrogate is now chasing a noisy target.",
+   "chunks": [
+    {
+     "start": 86.722,
+     "end": 94.018,
+     "text": "Two dockings of the same molecules correlate at only 0.3, so the surrogate is now chasing a noisy target."
+    }
+   ]
+  },
+  {
+   "id": "physiology-0",
+   "scene": "physiology",
+   "index": 0,
+   "start": 95.318,
+   "end": 99.539,
+   "cap": "Rung two carries a molecular signal all the way up to physiology.",
+   "chunks": [
+    {
+     "start": 95.318,
+     "end": 99.539,
+     "text": "Rung two carries a molecular signal all the way up to physiology."
+    }
+   ]
+  },
+  {
+   "id": "physiology-1",
+   "scene": "physiology",
+   "index": 1,
+   "start": 100.039,
+   "end": 106.877,
+   "cap": "Our pipeline turns a molecular dynamics trajectory into a model that a heart or kidney cell model can run.",
+   "chunks": [
+    {
+     "start": 100.039,
+     "end": 106.877,
+     "text": "Our pipeline turns a molecular dynamics trajectory into a model that a heart or kidney cell model can run."
+    }
+   ]
+  },
+  {
+   "id": "physiology-2",
+   "scene": "physiology",
+   "index": 2,
+   "start": 107.377,
+   "end": 115.396,
+   "cap": "It measures diffusion, learns the free-energy landscape, finds the barriers, and builds a bond graph, written out as standard CellML.",
+   "chunks": [
+    {
+     "start": 107.377,
+     "end": 111.994,
+     "text": "It measures diffusion, learns the free-energy landscape, finds the barriers,"
+    },
+    {
+     "start": 111.994,
+     "end": 115.396,
+     "text": "and builds a bond graph, written out as standard CellML."
+    }
+   ]
+  },
+  {
+   "id": "physiology-3",
+   "scene": "physiology",
+   "index": 3,
+   "start": 115.896,
+   "end": 121.61,
+   "cap": "The physics is in the architecture: the second law holds for any weights, at any point in training.",
+   "chunks": [
+    {
+     "start": 115.896,
+     "end": 121.61,
+     "text": "The physics is in the architecture: the second law holds for any weights, at any point in training."
+    }
+   ]
+  },
+  {
+   "id": "physiology-4",
+   "scene": "physiology",
+   "index": 4,
+   "start": 122.11,
+   "end": 128.719,
+   "cap": "An unconstrained network fits just as well, and breaks thermodynamics. Ours cannot make current from nothing.",
+   "chunks": [
+    {
+     "start": 122.11,
+     "end": 128.719,
+     "text": "An unconstrained network fits just as well, and breaks thermodynamics. Ours cannot make current from nothing."
+    }
+   ]
+  },
+  {
+   "id": "physiology-5",
+   "scene": "physiology",
+   "index": 5,
+   "start": 129.219,
+   "end": 139.433,
+   "cap": "On the KcsA potassium channel, with geometry from its crystal structure, the model gives a reversal potential of \u221291.3 mV.",
+   "chunks": [
+    {
+     "start": 129.219,
+     "end": 135.297,
+     "text": "On the KcsA potassium channel, with geometry from its crystal structure,"
+    },
+    {
+     "start": 135.297,
+     "end": 139.433,
+     "text": "the model gives a reversal potential of \u221291.3 mV."
+    }
+   ]
+  },
+  {
+   "id": "physiology-6",
+   "scene": "physiology",
+   "index": 6,
+   "start": 139.933,
+   "end": 147.952,
+   "cap": "That's the Nernst value, to numerical precision, across a hundred-fold range of potassium: the check a broken model fails.",
+   "chunks": [
+    {
+     "start": 139.933,
+     "end": 143.114,
+     "text": "That's the Nernst value, to numerical precision,"
+    },
+    {
+     "start": 143.114,
+     "end": 147.952,
+     "text": "across a hundred-fold range of potassium: the check a broken model fails."
+    }
+   ]
+  },
+  {
+   "id": "honesty-0",
+   "scene": "honesty",
+   "index": 0,
+   "start": 149.252,
+   "end": 155.815,
+   "cap": "Every number records where it came from, and a mutation audit breaks the code on purpose to prove the tests notice.",
+   "chunks": [
+    {
+     "start": 149.252,
+     "end": 155.815,
+     "text": "Every number records where it came from, and a mutation audit breaks the code on purpose to prove the tests notice."
+    }
+   ]
+  },
+  {
+   "id": "honesty-1",
+   "scene": "honesty",
+   "index": 1,
+   "start": 156.315,
+   "end": 157.942,
+   "cap": "We report what didn't work, too.",
+   "chunks": [
+    {
+     "start": 156.315,
+     "end": 157.942,
+     "text": "We report what didn't work, too."
+    }
+   ]
+  },
+  {
+   "id": "honesty-2",
+   "scene": "honesty",
+   "index": 2,
+   "start": 158.442,
+   "end": 166.96,
+   "cap": "The KcsA landscape is constrained to published values, not yet learned, and conductance comes out more than twenty times too low.",
+   "chunks": [
+    {
+     "start": 158.442,
+     "end": 163.167,
+     "text": "The KcsA landscape is constrained to published values, not yet learned,"
+    },
+    {
+     "start": 163.167,
+     "end": 166.96,
+     "text": "and conductance comes out more than twenty times too low."
+    }
+   ]
+  },
+  {
+   "id": "honesty-3",
+   "scene": "honesty",
+   "index": 3,
+   "start": 167.46,
+   "end": 177.528,
+   "cap": "Potassium crosses KcsA by multi-ion knock-on, and our model is single-ion. So we've moved to gramicidin A, where one ion is the right model.",
+   "chunks": [
+    {
+     "start": 167.46,
+     "end": 172.82,
+     "text": "Potassium crosses KcsA by multi-ion knock-on, and our model is single-ion."
+    },
+    {
+     "start": 172.82,
+     "end": 177.528,
+     "text": "So we've moved to gramicidin A, where one ion is the right model."
+    }
+   ]
+  },
+  {
+   "id": "close-0",
+   "scene": "close",
+   "index": 0,
+   "start": 178.828,
+   "end": 185.484,
+   "cap": "So how far can a chain of surrogates take us? Further than we expected, if every link carries its own evidence.",
+   "chunks": [
+    {
+     "start": 178.828,
+     "end": 185.484,
+     "text": "So how far can a chain of surrogates take us? Further than we expected, if every link carries its own evidence."
+    }
+   ]
+  },
+  {
+   "id": "close-1",
+   "scene": "close",
+   "index": 1,
+   "start": 185.984,
+   "end": 195.067,
+   "cap": "Lightning makes billion-molecule screening an afternoon's work. The bond-graph pipeline turns atoms into a component physiologists can use.",
+   "chunks": [
+    {
+     "start": 185.984,
+     "end": 190.13,
+     "text": "Lightning makes billion-molecule screening an afternoon's work."
+    },
+    {
+     "start": 190.13,
+     "end": 195.067,
+     "text": "The bond-graph pipeline turns atoms into a component physiologists can use."
+    }
+   ]
+  },
+  {
+   "id": "close-2",
+   "scene": "close",
+   "index": 2,
+   "start": 195.567,
+   "end": 202.129,
+   "cap": "Next, we join them: screen the library, pose the hits, simulate them, and ask what each one does to a cell.",
+   "chunks": [
+    {
+     "start": 195.567,
+     "end": 202.129,
+     "text": "Next, we join them: screen the library, pose the hits, simulate them, and ask what each one does to a cell."
+    }
+   ]
+  },
+  {
+   "id": "close-3",
+   "scene": "close",
+   "index": 3,
+   "start": 202.629,
+   "end": 205.138,
+   "cap": "It's all open source. Thanks for watching.",
+   "chunks": [
+    {
+     "start": 202.629,
+     "end": 205.138,
+     "text": "It's all open source. Thanks for watching."
+    }
+   ]
+  }
+ ],
+ "duration": 208.638
+}
