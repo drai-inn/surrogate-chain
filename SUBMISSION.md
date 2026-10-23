@@ -5,7 +5,7 @@ Everything needed for the OSI Hackathon 2026 submission on Moment
 
 ## Checklist
 
-- [ ] **Video, up to 4 minutes, not sped up:** `assets/video/surrogate-chain.mp4`
+- [x] **Video, up to 4 minutes, not sped up (3:43):** `assets/video/surrogate-chain.mp4`
 - [ ] **Public post with the video** (YouTube, LinkedIn, X, Bluesky or Threads, no login to view). Text below.
 - [x] **One-page write-up with a figure:** [`writeup.pdf`](writeup.pdf). Markdown version below for pasting.
 - [x] **Code repository:** <https://github.com/jmdowrick/hackathon2026>, with write-up and video at <https://github.com/drai-inn/surrogate-chain>

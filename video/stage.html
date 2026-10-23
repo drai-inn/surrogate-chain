@@ -176,10 +176,7 @@ const R = {};   // per-scene render functions
   const ml = rows.map((r, i) => mk(root, 'box rung', `left:${MX}px;top:${rowTop(i)}px;width:${MW}px;height:118px`,
     `<div class="acc"></div><div class="t" style="font-size:37px">${r[1]}</div><div class="k" style="font-size:18px;margin-top:8px;color:var(--soft)">${r[2]}</div>`));
   const conn = rows.map((r, i) => mk(root, 'abs', `left:${BX + BW + 34}px;top:${rowTop(i) + 44}px`, arrowH(MX - BX - BW - 68, C.soft)));
-  const tag = mk(root, 'abs k', `left:${MX}px;top:186px;color:var(--cyan);font-size:18px;letter-spacing:.14em`, '');
-  tag.style.top = '150px'; tag.style.left = `${MX + 440}px`; tag.style.display = 'none';
-  const ow = mk(root, 'abs k', `left:${MX}px;top:868px;font-size:19px;color:var(--soft)`, 'mostly open-weight · mostly new');
-  ow.style.top = '178px'; ow.style.color = 'var(--indigo-hi)';
+  const ow = mk(root, 'abs k', `left:${MX}px;top:180px;font-size:18px;color:var(--indigo-hi)`, 'mostly open-weight · mostly new');
   const trust = mk(root, 'box flexc', 'left:1508px;top:336px;width:320px;height:310px;padding:0 32px;border-color:#B8893C',
     `<div class="k" style="font-size:19px;color:var(--gold-hi)">The catch</div><div class="h1" style="font-size:72px;margin:6px 0 18px">Trust</div>` +
     ['ground truth?', 'simple baseline?', 'where it breaks?'].map(s => `<div class="k" style="font-size:19px;letter-spacing:.06em;text-transform:none;margin-top:6px">${s}</div>`).join(''));
@@ -243,21 +240,21 @@ const R = {};   // per-scene render functions
     `<div class="t" style="font-size:40px">${f[0]}</div><div class="soft" style="font-size:27px;margin-top:8px">${f[1]}</div>`));
   const farr = [0, 1].map(i => mk(A, 'abs', `left:${fx + (i + 1) * fw + i * fg + 16}px;top:630px`, arrowH(fg - 32)));
   // B: the model swap and training numbers
-  const cw = 690, cx1 = 165, cx2 = 1920 - 165 - cw;
+  const cw = 730, cx1 = 120, cx2 = 1920 - 120 - cw;
   const ampl = mk(B, 'box flexc', `left:${cx1}px;top:160px;width:${cw}px;height:270px;padding:0 44px;border-color:#B8893C`,
     `<div class="k" style="color:var(--gold-hi)">Incumbent</div><div class="h1" style="font-size:72px;margin-top:10px;color:var(--gold-hi)">AMPL</div><div class="soft" style="font-size:30px;margin-top:12px">GraphConv · TensorFlow</div>`);
   const light = mk(B, 'box flexc', `left:${cx2}px;top:160px;width:${cw}px;height:270px;padding:0 44px;border-color:#6A84DE;background:#202F5A`,
-    `<div class="k" style="color:var(--indigo-hi)">Rebuilt</div><div class="h1" style="font-size:72px;margin-top:10px;color:var(--indigo-hi)">VDSAI Lightning</div><div class="soft" style="font-size:30px;margin-top:12px">AttentiveFP · PyTorch Geometric + Lightning</div>`);
+    `<div class="k" style="color:var(--indigo-hi)">Rebuilt</div><div class="h1" style="font-size:72px;margin-top:10px;color:var(--indigo-hi)">VDSAI Lightning</div><div class="soft" style="font-size:27px;margin-top:12px;white-space:nowrap">AttentiveFP · PyTorch Geometric + Lightning</div>`);
   const swap = mk(B, 'abs', `left:${cx1 + cw + 40}px;top:280px`, arrowH(cx2 - cx1 - cw - 80, C.indigoHi, 4));
   const tiles = [['13×', 'faster training', '2.4 h vs 32.4 h · 3.5M molecules'], ['0.752', 'test R², tuned', 'AMPL 0.690 · higher is better'], ['4.41', 'test RMSE, tuned', 'AMPL 4.61 · lower is better']];
-  const tw = 510, tg = (1920 - 330 - 3 * tw) / 2;
-  const tl = tiles.map((x, i) => mk(B, 'box flexc', `left:${165 + i * (tw + tg)}px;top:490px;width:${tw}px;height:300px;padding:0 40px`,
+  const tg = 45, tw = (1680 - 2 * tg) / 3;
+  const tl = tiles.map((x, i) => mk(B, 'box flexc', `left:${120 + i * (tw + tg)}px;top:490px;width:${tw}px;height:300px;padding:0 40px`,
     `<div class="h1 num" style="font-size:108px;color:var(--indigo-hi)">${x[0]}</div><div class="t" style="font-size:34px;margin-top:12px">${x[1]}</div><div class="k" style="font-size:18px;margin-top:14px;letter-spacing:.06em">${x[2]}</div>`));
   // C: the billion-molecule screen
   const ctr = mk(Cc, 'abs h1 num', 'left:0;width:1920px;top:176px;text-align:center;font-size:196px;color:var(--indigo-hi)', '0');
   const ctrL = mk(Cc, 'abs t', 'left:0;width:1920px;top:400px;text-align:center;font-size:46px', 'ZINC molecules scored by Lightning');
-  const chips = [['4 h 27 min', 'wall clock'], ['1 workspace', 'no cluster'], ['≈ 540×', 'faster than docking them']].map((c, i) =>
-    mk(Cc, 'box flexc', `left:${165 + i * (tw + tg)}px;top:540px;width:${tw}px;height:200px;padding:0 40px`,
+  const chips = [['4 h 27 min', 'wall clock'], ['1 workspace', 'no cluster']].map((c, i) =>
+    mk(Cc, 'box flexc', `left:${960 - tw - tg / 2 + i * (tw + tg)}px;top:540px;width:${tw}px;height:200px;padding:0 40px`,
       `<div class="h1 num" style="font-size:72px">${c[0]}</div><div class="k" style="font-size:20px;margin-top:14px">${c[1]}</div>`));
   // D: head to head on pool_3
   mk(D, 'abs h1', 'left:120px;top:150px;font-size:50px', 'Recall of the true docking top 1M');
@@ -282,8 +279,8 @@ const R = {};   // per-scene render functions
   const gB = [['AMPL', '166.4 h', C.gold, 166.4], ['Lightning', '0.44 h', C.indigo, .44]].map((g, i) => {
     const l = mk(gpu, 'abs k num', `left:0;top:${250 + i * 50}px;font-size:19px;width:140px;letter-spacing:.06em;text-transform:none`, g[0]);
     const b = mk(gpu, 'abs', `left:140px;top:${250 + i * 50 + 2}px;height:22px;border-radius:0 5px 5px 0;background:${g[2]}`);
-    const v = mk(gpu, 'abs k num', `top:${250 + i * 50}px;font-size:19px;letter-spacing:.04em;text-transform:none;color:var(--text)`, g[1]);
-    return {b, v, w: Math.max(4, 330 * g[3] / 166.4)};
+    const v = mk(gpu, 'abs k num', `top:${250 + i * 50}px;font-size:19px;letter-spacing:.04em;text-transform:none;color:var(--text);white-space:nowrap`, g[1]);
+    return {b, v, w: Math.max(4, 290 * g[3] / 166.4)};
   });
   const noise = mk(D, 'box flexc', 'left:1270px;top:540px;width:540px;height:250px;padding:0 38px',
     `<div class="k" style="font-size:20px">Docking vs itself</div><div class="h1 num" style="font-size:84px;margin-top:8px">r = 0.30</div><div class="soft" style="font-size:26px;margin-top:8px">same molecules, docked twice: the ceiling for any surrogate</div>`);
@@ -311,7 +308,7 @@ const R = {};   // per-scene render functions
       const pn = eo(ramp(t, s(4).start - .2, W('screening', 4, 'molecules', .2)));
       ctr.textContent = fmtInt(925e6 * pn);
       show(ctrL, rv(t, W('screening', 4, 'molecules', -.3)), 12);
-      const tc = [W('screening', 4, 'four and a half', -.3), W('screening', 4, 'single', -.3), W('screening', 4, 'workspace', .6)];
+      const tc = [W('screening', 4, 'four and a half', -.3), W('screening', 4, 'single', -.3)];
       chips.forEach((c, i) => show(c, rv(t, tc[i])));
     }
     if (pd > .002) {
@@ -360,10 +357,10 @@ const R = {};   // per-scene render functions
   const AX0 = 640, AX1 = 1780, dec = (AX1 - AX0) / 16, xl = e => AX0 + (e + 16) * dec;
   [-16, -12, -8, -4, 0].forEach(e => {
     mk(B, 'abs', `left:${xl(e)}px;top:388px;width:1px;height:280px;background:#2C3A66`);
-    mk(B, 'abs k num', `left:${xl(e) - 60}px;top:680px;width:120px;text-align:center;font-size:20px;color:var(--mute);text-transform:none`, `10<sup>${e === 0 ? '0' : '−' + (-e)}</sup>`);
+    mk(B, 'abs k num', `left:${xl(e) - 60}px;top:680px;width:120px;text-align:center;font-size:24px;color:var(--soft);text-transform:none`, `10<sup>${e === 0 ? '0' : '−' + (-e)}</sup>`);
   });
   const thr = mk(B, 'abs', `left:${xl(-10)}px;top:380px;width:0;height:300px;border-left:3px dashed #9AA7CD`);
-  const thrL = mk(B, 'abs k', `left:${xl(-10) + 14}px;top:372px;font-size:17px;text-transform:none;letter-spacing:.04em;color:var(--soft)`, 'test fails above 10<sup>−10</sup>');
+  const thrL = mk(B, 'abs k', `left:${xl(-10) + 14}px;top:366px;font-size:21px;text-transform:none;letter-spacing:.03em;color:var(--soft)`, 'test fails above 10<sup>−10</sup>');
   const rowsB = [['Structured (ours)', C.indigo, C.indigoHi, -15, null, '~10<sup>−15</sup>'], ['Unconstrained network', C.gray, C.text, -4, -2, '10<sup>−4</sup> to 10<sup>−2</sup>']].map((r, i) => {
     const y = 420 + i * 130;
     const lab = mk(B, 'abs t', `left:120px;top:${y + 6}px;width:${AX0 - 160}px;font-size:36px`, r[0]);
@@ -379,7 +376,7 @@ const R = {};   // per-scene render functions
   mk(Cc, 'abs k', 'left:122px;top:214px;font-size:19px;text-transform:none;letter-spacing:.04em', 'single-ion bond graph · [K<sup>+</sup>] 140 mM in, 4 mM out · 298 K');
   const W0 = 1000, H0 = 600;
   const svg = sv(Cc, 'svg', {width: W0, height: H0, viewBox: `0 0 ${W0} ${H0}`, style: 'position:absolute;left:96px;top:262px;overflow:visible'});
-  const px0 = 120, px1 = 960, py0 = 20, py1 = 520, Imin = -0.25, Imax = 1.45;
+  const px0 = 120, px1 = 960, py0 = 20, py1 = 520, Imin = -0.5, Imax = 1.45;
   const X = v => px0 + (v + 200) / 400 * (px1 - px0), Y = i => py1 - (i - Imin) / (Imax - Imin) * (py1 - py0);
   [-200, -100, 0, 100, 200].forEach(v => {
     sv(svg, 'line', {x1: X(v), x2: X(v), y1: py0, y2: py1, stroke: v === 0 ? '#3B4B7E' : '#243159', 'stroke-width': v === 0 ? 2 : 1});
@@ -401,7 +398,7 @@ const R = {};   // per-scene render functions
   const nline = sv(svg, 'line', {x1: X(En), x2: X(En), y1: py0, y2: py1, stroke: C.cyan, 'stroke-width': 3, 'stroke-dasharray': '10 9'});
   const ring = sv(svg, 'circle', {cx: X(Erev), cy: Y(0), r: 20, fill: 'none', stroke: C.indigoHi, 'stroke-width': 3});
   const dot = sv(svg, 'circle', {cx: X(Erev), cy: Y(0), r: 10, fill: C.indigoHi});
-  const erevL = mk(Cc, 'abs', `left:${96 + X(Erev) - 310}px;top:${262 + Y(0) - 150}px;width:290px;text-align:right`,
+  const erevL = mk(Cc, 'abs', `left:${96 + X(Erev) + 46}px;top:${262 + Y(0) + 24}px;width:360px`,
     `<div class="k" style="font-size:19px;color:var(--indigo-hi)">Model zero current</div><div class="h1 num" style="font-size:52px;margin-top:6px">${Erev < 0 ? '−' : ''}${Math.abs(Erev).toFixed(2)} mV</div>`);
   const nernL = mk(Cc, 'abs', `left:${96 + X(En) + 26}px;top:${262 + py0 + 10}px;width:330px`,
     `<div class="k" style="font-size:19px;color:var(--cyan)">Nernst E<sub style="font-size:.7em">K</sub></div><div class="h1 num" style="font-size:52px;margin-top:6px;color:var(--cyan)">${En < 0 ? '−' : ''}${Math.abs(En).toFixed(2)} mV</div>`);
@@ -536,7 +533,7 @@ const R = {};   // per-scene render functions
   const cards = [[C.indigo, C.indigoHi, 'Rung 1 · screening', '925M molecules in 4 h 27 min', '35.0% of the docking top 1M · 381× fewer GPU hours'],
                  [C.gold, C.goldHi, 'Rung 2 · atoms to a cell', 'MD → bond graph → CellML', 'zero current at the Nernst potential · second law by construction']].map((c, i) =>
     mk(top, 'box flexc', `left:${165 + i * 820}px;top:520px;width:770px;height:250px;padding:0 44px;border-color:${c[0]}`,
-      `<div class="k" style="color:${c[1]};font-size:21px">${c[2]}</div><div class="h1" style="font-size:52px;margin-top:12px">${c[3]}</div><div class="soft" style="font-size:26px;margin-top:12px">${c[4]}</div>`));
+      `<div class="k" style="color:${c[1]};font-size:21px">${c[2]}</div><div class="h1" style="font-size:46px;margin-top:12px;white-space:nowrap">${c[3]}</div><div class="soft" style="font-size:26px;margin-top:12px">${c[4]}</div>`));
   const chain = [['Screen', 'Lightning'], ['Pose', 'co-folding'], ['Simulate', 'molecular dynamics'], ['Bond graph', 'CellML'], ['Cell', 'physiology']];
   const cw = 296, cg = (1728 - 5 * cw) / 4;
   const cb = chain.map((c, i) => mk(top, 'box flexc', `left:${96 + i * (cw + cg)}px;top:540px;width:${cw}px;height:190px;padding:0 30px;${i === 0 ? 'border-color:#6A84DE' : i >= 3 ? 'border-color:#B8893C' : ''}`,
@@ -553,7 +550,7 @@ const R = {};   // per-scene render functions
     </div>
     <div id="team"></div><div id="affils"></div>`;
   const s = i => S('close', i);
-  const tEnd = s(3).start - .15;
+  const tEnd = s(3).start + .25;
   window.__endCardStart = tEnd;
   R.close = t => {
     const pe = rv(t, tEnd - .3, .6);
@@ -565,7 +562,7 @@ const R = {};   // per-scene render functions
     show(ans, rv(t, W('close', 0, 'Further', -.2)), 12);
     const pcards = rv(t, s(1).start - .2) * (1 - ramp(t, s(2).start - .4, s(2).start));
     cards.forEach((c, i) => show(c, pcards * rv(t, i === 0 ? W('close', 1, 'Lightning', -.2) : W('close', 1, 'The bond', -.2)), 18));
-    const tc = [W('close', 2, 'Screen', -.2), W('close', 2, 'pose', -.2), W('close', 2, 'simulate', -.2), W('close', 2, 'and ask', -.2), W('close', 2, 'cell', -.3)];
+    const tc = [W('close', 2, 'Screen', -.2), W('close', 2, 'pose', -.2), W('close', 2, 'simulate', -.2), W('close', 2, 'and ask', -.3), W('close', 2, 'what each', -.1)];
     show(nextK, rv(t, s(2).start - .1), 8);
     cb.forEach((b, i) => show(b, rv(t, tc[i]), 20));
     ca.forEach((a, i) => show(a, rv(t, tc[i + 1] - .1), 0, -12));
@@ -579,15 +576,23 @@ const R = {};   // per-scene render functions
     const idxBased = team.some(p => typeof p.affiliation === 'number' || Array.isArray(p.affiliation));
     const zero = idxBased && team.some(p => [].concat(p.affiliation).includes(0));
     const rungColor = r => { const s = String(r == null ? '' : r); return /2/.test(s) ? C.gold : /1/.test(s) ? C.indigo : null; };
-    const n = team.length, cols = n <= 4 ? 2 : 3;
-    box.style.gridTemplateColumns = `repeat(${cols},${cols === 2 ? 560 : 500}px)`;
-    const scale = n > 18 ? .78 : n > 15 ? .88 : 1;
+    const n = team.length, hasAff = team.some(p => p.affiliation != null && p.affiliation !== ''), hasRung = team.some(p => rungColor(p.rung));
+    const cols = n <= 4 ? 2 : (hasAff ? 3 : (n <= 9 ? 3 : 4));
+    const colW = cols === 2 ? 560 : cols === 3 ? 500 : 390;
+    box.style.gridTemplateColumns = `repeat(${cols},${colW}px)`;
+    box.style.textAlign = hasAff || hasRung ? 'left' : 'center';
+    const rowsN = Math.ceil(n / cols);
+    const scale = rowsN > 6 ? .78 : rowsN > 5 ? .88 : 1;
+    const old = document.getElementById('teamlab'); if (old) old.remove();
+    const lab = document.createElement('div'); lab.id = 'teamlab'; lab.className = 'k'; lab.style.cssText = 'font-size:19px;color:var(--mute);margin-top:44px';
+    lab.textContent = 'Auckland hub team'; box.parentNode.insertBefore(lab, box); box.style.marginTop = '16px';
     team.forEach(p => {
       const c = rungColor(p.rung);
       let aff = '';
       if (idxBased) aff = [].concat(p.affiliation).filter(x => x != null).map(x => `<sup>${zero ? x + 1 : x}</sup>`).join('');
       const d = mk(box, 'p', '');
-      d.innerHTML = `<span class="dot" style="background:${c || 'transparent'}"></span><div><div class="n" style="font-size:${30 * scale}px">${p.name}${idxBased ? aff : ''}</div>` +
+      d.style.justifyContent = hasAff || hasRung ? 'flex-start' : 'center';
+      d.innerHTML = (hasRung ? `<span class="dot" style="background:${c || 'transparent'}"></span>` : '') + `<div><div class="n" style="font-size:${30 * scale}px">${p.name}${idxBased ? aff : ''}</div>` +
         (!idxBased && p.affiliation ? `<div class="a" style="font-size:${20 * scale}px">${p.affiliation}</div>` : '') + '</div>';
     });
     if (idxBased && affs.length) foot.innerHTML = affs.map((a, i) => `<sup>${i + 1}</sup>${a}`).join('&nbsp;&nbsp; ');
@@ -634,6 +639,7 @@ window.renderAt = function (t) {
   } else { cap.style.opacity = 0; }
 };
 window.captionLines = function () {   // for QA: lines in every caption chunk
+  cap.dataset.txt = '';
   return chunks.map(c => { cap.textContent = c.text; cap.style.fontSize = (fitCache[c.text] || 46) + 'px'; return [Math.round(cap.scrollHeight / (parseFloat(cap.style.fontSize) * 1.27)), c.text.length, c.text]; });
 };
 window.renderAt(parseFloat(new URLSearchParams(location.search).get('t') || '1.9'));

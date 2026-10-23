@@ -76,7 +76,8 @@ def main():
         for n, s in enumerate(scene["sentences"]):
             key = f"{scene['id']}-{n}"
             override = os.path.join(wav_dir, "override", key + ".wav")
-            h = hashlib.sha1(f"{spec['voice']}|{spec['speed']}|{s['say']}".encode()).hexdigest()[:12]
+            fixes = [f for f in spec.get("phoneme_fixes", []) if f["word"] in s["say"]]
+            h = hashlib.sha1(f"{spec['voice']}|{spec['speed']}|{s['say']}|{json.dumps(fixes)}".encode()).hexdigest()[:12]
             cached = os.path.join(wav_dir, f"{key}-{h}.wav")
             if os.path.exists(override):
                 audio, sr = sf.read(override, dtype="float32")
@@ -88,8 +89,16 @@ def main():
                     from kokoro_onnx import Kokoro
                     kokoro = Kokoro(os.path.join(args.models, "kokoro-v1.0.onnx"),
                                     os.path.join(args.models, "voices-v1.0.bin"))
-                audio, sr = kokoro.create(s["say"], voice=spec["voice"],
-                                          speed=spec["speed"], lang="en-us")
+                if fixes:   # patch the phonemes where the G2P gets a word wrong
+                    ph = kokoro.tokenizer.phonemize(s["say"], "en-us")
+                    for f in fixes:
+                        assert f["from"] in ph, f"phoneme fix for {f['word']!r} no longer matches: {ph}"
+                        ph = ph.replace(f["from"], f["to"])
+                    audio, sr = kokoro.create(ph, voice=spec["voice"], speed=spec["speed"],
+                                              lang="en-us", is_phonemes=True)
+                else:
+                    audio, sr = kokoro.create(s["say"], voice=spec["voice"],
+                                              speed=spec["speed"], lang="en-us")
                 audio = np.asarray(audio, np.float32)
                 sf.write(cached, audio, sr)
             # trim leading/trailing near-silence so pauses are ours, not the model's

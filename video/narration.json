@@ -1,6 +1,18 @@
 {
   "voice": "af_heart",
   "speed": 1.0,
+  "phoneme_fixes": [
+    {
+      "word": "V D S A I",
+      "from": "vˈiː dˈiː ˈɛs ɐ aɪ",
+      "to": "vˈiː dˈiː ˈɛs ˈeɪ ˈaɪ"
+    },
+    {
+      "word": "gramicidin",
+      "from": "ɡɹˈæmɪsˌɪdɪn",
+      "to": "ɡɹˌæmɪsˈaɪdɪn"
+    }
+  ],
   "scenes": [
     {
       "id": "question",

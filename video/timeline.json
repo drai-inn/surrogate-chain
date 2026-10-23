@@ -17,25 +17,25 @@
    "id": "screening",
    "label": "03 \u00b7 Rung one: screening a billion molecules",
    "start": 40.969,
-   "end": 99.285
+   "end": 99.583
   },
   {
    "id": "physiology",
    "label": "04 \u00b7 Rung two: from atoms to a cell",
-   "start": 100.085,
-   "end": 155.115
+   "start": 100.383,
+   "end": 155.414
   },
   {
    "id": "honesty",
    "label": "05 \u00b7 How we tried not to fool ourselves",
-   "start": 155.915,
-   "end": 190.378
+   "start": 156.214,
+   "end": 190.725
   },
   {
    "id": "close",
    "label": "06 \u00b7 Where this goes",
-   "start": 191.178,
-   "end": 222.488
+   "start": 191.525,
+   "end": 222.835
   }
  ],
  "sentences": [
@@ -214,15 +214,15 @@
    "scene": "screening",
    "index": 2,
    "start": 49.638,
-   "end": 57.298,
+   "end": 57.597,
    "cap": "We rebuilt that surrogate: VDSAI Lightning, an AttentiveFP graph network replacing AMPL's GraphConv stack.",
    "say": "We rebuilt that surrogate. V D S A I Lightning is an Attentive F P graph network, replacing ample's graph conv stack.",
    "chunks": [
     {
      "start": 49.638,
-     "end": 57.298,
+     "end": 57.597,
      "text": "We rebuilt that surrogate: VDSAI Lightning, an AttentiveFP graph network replacing AMPL's GraphConv stack.",
-     "show_end": 57.748
+     "show_end": 58.047
     }
    ]
   },
@@ -230,16 +230,16 @@
    "id": "screening-3",
    "scene": "screening",
    "index": 3,
-   "start": 57.798,
-   "end": 65.419,
+   "start": 58.097,
+   "end": 65.718,
    "cap": "On three and a half million molecules it trained 13\u00d7 faster, and after tuning it beat AMPL on every test metric.",
    "say": "On three and a half million molecules, it trained thirteen times faster, and after tuning, it beat ample on every test metric.",
    "chunks": [
     {
-     "start": 57.798,
-     "end": 65.419,
+     "start": 58.097,
+     "end": 65.718,
      "text": "On three and a half million molecules it trained 13\u00d7 faster, and after tuning it beat AMPL on every test metric.",
-     "show_end": 65.869
+     "show_end": 66.168
     }
    ]
   },
@@ -247,16 +247,16 @@
    "id": "screening-4",
    "scene": "screening",
    "index": 4,
-   "start": 65.919,
-   "end": 72.295,
+   "start": 66.218,
+   "end": 72.594,
    "cap": "Then we scored 925 million molecules in under four and a half hours on a single workspace.",
    "say": "Then we scored nine hundred and twenty-five million molecules in under four and a half hours, on a single workspace.",
    "chunks": [
     {
-     "start": 65.919,
-     "end": 72.295,
+     "start": 66.218,
+     "end": 72.594,
      "text": "Then we scored 925 million molecules in under four and a half hours on a single workspace.",
-     "show_end": 72.745
+     "show_end": 73.044
     }
    ]
   },
@@ -264,22 +264,22 @@
    "id": "screening-5",
    "scene": "screening",
    "index": 5,
-   "start": 72.795,
-   "end": 86.643,
+   "start": 73.094,
+   "end": 86.941,
    "cap": "Head to head on a 98-million-molecule pool, Lightning recovered 35% of the true docking top million. AMPL recovered 32%, ranking by size 2.6%, random picks 1.2%.",
    "say": "Head to head, on a ninety-eight million molecule pool, Lightning recovered thirty-five percent of the true docking top million. Ample recovered thirty-two, ranking by size, two point six, and random picks, one point two.",
    "chunks": [
     {
-     "start": 72.795,
-     "end": 81.45,
+     "start": 73.094,
+     "end": 81.748,
      "text": "Head to head on a 98-million-molecule pool, Lightning recovered 35% of the true docking top million.",
-     "show_end": 81.45
+     "show_end": 81.748
     },
     {
-     "start": 81.45,
-     "end": 86.643,
+     "start": 81.748,
+     "end": 86.941,
      "text": "AMPL recovered 32%, ranking by size 2.6%, random picks 1.2%.",
-     "show_end": 87.093
+     "show_end": 87.391
     }
    ]
   },
@@ -287,16 +287,16 @@
    "id": "screening-6",
    "scene": "screening",
    "index": 6,
-   "start": 87.143,
-   "end": 90.989,
+   "start": 87.441,
+   "end": 91.287,
    "cap": "And it used 381\u00d7 fewer GPU hours.",
    "say": "And it used three hundred and eighty-one times fewer G P U hours.",
    "chunks": [
     {
-     "start": 87.143,
-     "end": 90.989,
+     "start": 87.441,
+     "end": 91.287,
      "text": "And it used 381\u00d7 fewer GPU hours.",
-     "show_end": 91.439
+     "show_end": 91.737
     }
    ]
   },
@@ -304,16 +304,16 @@
    "id": "screening-7",
    "scene": "screening",
    "index": 7,
-   "start": 91.489,
-   "end": 98.785,
+   "start": 91.787,
+   "end": 99.083,
    "cap": "Two dockings of the same molecules correlate at only 0.3, so the surrogate is now chasing a noisy target.",
    "say": "Two dockings of the same molecules correlate at only zero point three, so the surrogate is now chasing a noisy target.",
    "chunks": [
     {
-     "start": 91.489,
-     "end": 98.785,
+     "start": 91.787,
+     "end": 99.083,
      "text": "Two dockings of the same molecules correlate at only 0.3, so the surrogate is now chasing a noisy target.",
-     "show_end": 99.235
+     "show_end": 99.533
     }
    ]
   },
@@ -321,16 +321,16 @@
    "id": "physiology-0",
    "scene": "physiology",
    "index": 0,
-   "start": 100.085,
-   "end": 104.306,
+   "start": 100.383,
+   "end": 104.605,
    "cap": "Rung two carries a molecular signal all the way up to physiology.",
    "say": "Rung two carries a molecular signal all the way up to physiology.",
    "chunks": [
     {
-     "start": 100.085,
-     "end": 104.306,
+     "start": 100.383,
+     "end": 104.605,
      "text": "Rung two carries a molecular signal all the way up to physiology.",
-     "show_end": 104.756
+     "show_end": 105.055
     }
    ]
   },
@@ -338,16 +338,16 @@
    "id": "physiology-1",
    "scene": "physiology",
    "index": 1,
-   "start": 104.806,
-   "end": 111.644,
+   "start": 105.105,
+   "end": 111.942,
    "cap": "Our pipeline turns a molecular dynamics trajectory into a model that a heart or kidney cell model can run.",
    "say": "Our pipeline turns a molecular dynamics trajectory into a model that a heart or kidney cell model can run.",
    "chunks": [
     {
-     "start": 104.806,
-     "end": 111.644,
+     "start": 105.105,
+     "end": 111.942,
      "text": "Our pipeline turns a molecular dynamics trajectory into a model that a heart or kidney cell model can run.",
-     "show_end": 112.094
+     "show_end": 112.392
     }
    ]
   },
@@ -355,22 +355,22 @@
    "id": "physiology-2",
    "scene": "physiology",
    "index": 2,
-   "start": 112.144,
-   "end": 122.059,
+   "start": 112.442,
+   "end": 122.358,
    "cap": "It measures diffusion, learns the free-energy landscape, finds the barriers, and builds a bond graph, a thermodynamic circuit, written out as standard CellML.",
    "say": "It measures diffusion, learns the free energy landscape, finds the barriers, and builds a bond graph, a thermodynamic circuit, written out as standard cell M L.",
    "chunks": [
     {
-     "start": 112.144,
-     "end": 116.944,
+     "start": 112.442,
+     "end": 117.242,
      "text": "It measures diffusion, learns the free-energy landscape, finds the barriers,",
-     "show_end": 116.944
+     "show_end": 117.242
     },
     {
-     "start": 116.944,
-     "end": 122.059,
+     "start": 117.242,
+     "end": 122.358,
      "text": "and builds a bond graph, a thermodynamic circuit, written out as standard CellML.",
-     "show_end": 122.509
+     "show_end": 122.808
     }
    ]
   },
@@ -378,16 +378,16 @@
    "id": "physiology-3",
    "scene": "physiology",
    "index": 3,
-   "start": 122.559,
-   "end": 128.273,
+   "start": 122.858,
+   "end": 128.572,
    "cap": "The physics is in the architecture: the second law holds for any weights, at any point in training.",
    "say": "The physics is in the architecture. The second law holds for any weights, at any point in training.",
    "chunks": [
     {
-     "start": 122.559,
-     "end": 128.273,
+     "start": 122.858,
+     "end": 128.572,
      "text": "The physics is in the architecture: the second law holds for any weights, at any point in training.",
-     "show_end": 128.723
+     "show_end": 129.022
     }
    ]
   },
@@ -395,16 +395,16 @@
    "id": "physiology-4",
    "scene": "physiology",
    "index": 4,
-   "start": 128.773,
-   "end": 135.382,
+   "start": 129.072,
+   "end": 135.681,
    "cap": "An unconstrained network fits just as well, and breaks thermodynamics. Ours cannot make current from nothing.",
    "say": "An unconstrained network fits just as well, and breaks thermodynamics. Ours cannot make current from nothing.",
    "chunks": [
     {
-     "start": 128.773,
-     "end": 135.382,
+     "start": 129.072,
+     "end": 135.681,
      "text": "An unconstrained network fits just as well, and breaks thermodynamics. Ours cannot make current from nothing.",
-     "show_end": 135.832
+     "show_end": 136.131
     }
    ]
   },
@@ -412,22 +412,22 @@
    "id": "physiology-5",
    "scene": "physiology",
    "index": 5,
-   "start": 135.882,
-   "end": 146.096,
+   "start": 136.181,
+   "end": 146.394,
    "cap": "On the KcsA potassium channel, with geometry from its crystal structure, the model gives a reversal potential of \u221291.3 mV.",
    "say": "On the K C S A potassium channel, with geometry from its crystal structure, the model gives a reversal potential of minus ninety-one point three millivolts.",
    "chunks": [
     {
-     "start": 135.882,
-     "end": 141.96,
+     "start": 136.181,
+     "end": 142.258,
      "text": "On the KcsA potassium channel, with geometry from its crystal structure,",
-     "show_end": 141.96
+     "show_end": 142.258
     },
     {
-     "start": 141.96,
-     "end": 146.096,
+     "start": 142.258,
+     "end": 146.394,
      "text": "the model gives a reversal potential of \u221291.3 mV.",
-     "show_end": 146.546
+     "show_end": 146.844
     }
    ]
   },
@@ -435,22 +435,22 @@
    "id": "physiology-6",
    "scene": "physiology",
    "index": 6,
-   "start": 146.596,
-   "end": 154.615,
+   "start": 146.894,
+   "end": 154.914,
    "cap": "That's the Nernst value, to numerical precision, across a hundred-fold range of potassium: the check a broken model fails.",
    "say": "That's the Nernst value, to numerical precision, across a hundred-fold range of potassium. It's the check a broken model fails.",
    "chunks": [
     {
-     "start": 146.596,
-     "end": 149.777,
+     "start": 146.894,
+     "end": 150.076,
      "text": "That's the Nernst value, to numerical precision,",
-     "show_end": 149.777
+     "show_end": 150.076
     },
     {
-     "start": 149.777,
-     "end": 154.615,
+     "start": 150.076,
+     "end": 154.914,
      "text": "across a hundred-fold range of potassium: the check a broken model fails.",
-     "show_end": 155.065
+     "show_end": 155.364
     }
    ]
   },
@@ -458,22 +458,22 @@
    "id": "honesty-0",
    "scene": "honesty",
    "index": 0,
-   "start": 155.915,
-   "end": 162.478,
+   "start": 156.214,
+   "end": 162.776,
    "cap": "Every number records where it came from, and a mutation audit breaks the code on purpose to prove the tests notice.",
    "say": "Every number records where it came from, and a mutation audit breaks the code on purpose, to prove the tests notice.",
    "chunks": [
     {
-     "start": 155.915,
-     "end": 158.218,
+     "start": 156.214,
+     "end": 158.517,
      "text": "Every number records where it came from,",
-     "show_end": 158.218
+     "show_end": 158.517
     },
     {
-     "start": 158.218,
-     "end": 162.478,
+     "start": 158.517,
+     "end": 162.776,
      "text": "and a mutation audit breaks the code on purpose to prove the tests notice.",
-     "show_end": 162.928
+     "show_end": 163.226
     }
    ]
   },
@@ -481,16 +481,16 @@
    "id": "honesty-1",
    "scene": "honesty",
    "index": 1,
-   "start": 162.978,
-   "end": 164.605,
+   "start": 163.276,
+   "end": 164.904,
    "cap": "We report what didn't work, too.",
    "say": "We report what didn't work, too.",
    "chunks": [
     {
-     "start": 162.978,
-     "end": 164.605,
+     "start": 163.276,
+     "end": 164.904,
      "text": "We report what didn't work, too.",
-     "show_end": 165.055
+     "show_end": 165.354
     }
    ]
   },
@@ -498,22 +498,22 @@
    "id": "honesty-2",
    "scene": "honesty",
    "index": 2,
-   "start": 165.105,
-   "end": 172.9,
+   "start": 165.404,
+   "end": 173.199,
    "cap": "The KcsA landscape is constrained to published values, not yet learned, and trapped ions can't pin down the barriers.",
    "say": "The K C S A landscape is constrained to published values, not yet learned. And trapped ions can't pin down the barriers.",
    "chunks": [
     {
-     "start": 165.105,
-     "end": 168.734,
+     "start": 165.404,
+     "end": 169.033,
      "text": "The KcsA landscape is constrained to published values,",
-     "show_end": 168.734
+     "show_end": 169.033
     },
     {
-     "start": 168.734,
-     "end": 172.9,
+     "start": 169.033,
+     "end": 173.199,
      "text": "not yet learned, and trapped ions can't pin down the barriers.",
-     "show_end": 173.35
+     "show_end": 173.649
     }
    ]
   },
@@ -521,22 +521,22 @@
    "id": "honesty-3",
    "scene": "honesty",
    "index": 3,
-   "start": 173.4,
-   "end": 182.538,
+   "start": 173.699,
+   "end": 182.837,
    "cap": "Conductance comes out more than 20\u00d7 too low, because potassium crosses KcsA by multi-ion knock-on and our model is single-ion.",
    "say": "Conductance comes out more than twenty times too low, because potassium crosses K C S A by multi-ion knock-on, and our model is single-ion.",
    "chunks": [
     {
-     "start": 173.4,
-     "end": 176.617,
+     "start": 173.699,
+     "end": 176.915,
      "text": "Conductance comes out more than 20\u00d7 too low,",
-     "show_end": 176.617
+     "show_end": 176.915
     },
     {
-     "start": 176.617,
-     "end": 182.538,
+     "start": 176.915,
+     "end": 182.837,
      "text": "because potassium crosses KcsA by multi-ion knock-on and our model is single-ion.",
-     "show_end": 182.988
+     "show_end": 183.287
     }
    ]
   },
@@ -544,16 +544,16 @@
    "id": "honesty-4",
    "scene": "honesty",
    "index": 4,
-   "start": 183.038,
-   "end": 189.878,
+   "start": 183.337,
+   "end": 190.225,
    "cap": "So we've moved to gramicidin A, where one ion is the right model, now built in a membrane and equilibrated.",
    "say": "So we've moved to gramicidin A, where one ion is the right model, now built in a membrane and equilibrated.",
    "chunks": [
     {
-     "start": 183.038,
-     "end": 189.878,
+     "start": 183.337,
+     "end": 190.225,
      "text": "So we've moved to gramicidin A, where one ion is the right model, now built in a membrane and equilibrated.",
-     "show_end": 190.328
+     "show_end": 190.675
     }
    ]
   },
@@ -561,16 +561,16 @@
    "id": "close-0",
    "scene": "close",
    "index": 0,
-   "start": 191.178,
-   "end": 197.834,
+   "start": 191.525,
+   "end": 198.181,
    "cap": "So how far can a chain of surrogates take us? Further than we expected, if every link carries its own evidence.",
    "say": "So, how far can a chain of surrogates take us? Further than we expected, if every link carries its own evidence.",
    "chunks": [
     {
-     "start": 191.178,
-     "end": 197.834,
+     "start": 191.525,
+     "end": 198.181,
      "text": "So how far can a chain of surrogates take us? Further than we expected, if every link carries its own evidence.",
-     "show_end": 198.284
+     "show_end": 198.631
     }
    ]
   },
@@ -578,22 +578,22 @@
    "id": "close-1",
    "scene": "close",
    "index": 1,
-   "start": 198.334,
-   "end": 207.417,
+   "start": 198.681,
+   "end": 207.764,
    "cap": "Lightning makes billion-molecule screening an afternoon's work. The bond-graph pipeline turns atoms into a component physiologists can use.",
    "say": "Lightning makes billion-molecule screening an afternoon's work. The bond graph pipeline turns atoms into a component physiologists can use.",
    "chunks": [
     {
-     "start": 198.334,
-     "end": 202.481,
+     "start": 198.681,
+     "end": 202.828,
      "text": "Lightning makes billion-molecule screening an afternoon's work.",
-     "show_end": 202.481
+     "show_end": 202.828
     },
     {
-     "start": 202.481,
-     "end": 207.417,
+     "start": 202.828,
+     "end": 207.764,
      "text": "The bond-graph pipeline turns atoms into a component physiologists can use.",
-     "show_end": 207.867
+     "show_end": 208.214
     }
    ]
   },
@@ -601,16 +601,16 @@
    "id": "close-2",
    "scene": "close",
    "index": 2,
-   "start": 207.917,
-   "end": 214.479,
+   "start": 208.264,
+   "end": 214.826,
    "cap": "Next, we join them: screen the library, pose the hits, simulate them, and ask what each one does to a cell.",
    "say": "Next, we join them. Screen the library, pose the hits, simulate them, and ask what each one does to a cell.",
    "chunks": [
     {
-     "start": 207.917,
-     "end": 214.479,
+     "start": 208.264,
+     "end": 214.826,
      "text": "Next, we join them: screen the library, pose the hits, simulate them, and ask what each one does to a cell.",
-     "show_end": 214.929
+     "show_end": 215.276
     }
    ]
   },
@@ -618,19 +618,19 @@
    "id": "close-3",
    "scene": "close",
    "index": 3,
-   "start": 214.979,
-   "end": 217.488,
+   "start": 215.326,
+   "end": 217.835,
    "cap": "It's all open source. Thanks for watching.",
    "say": "It's all open source. Thanks for watching.",
    "chunks": [
     {
-     "start": 214.979,
-     "end": 217.488,
+     "start": 215.326,
+     "end": 217.835,
      "text": "It's all open source. Thanks for watching.",
-     "show_end": 217.938
+     "show_end": 218.285
     }
    ]
   }
  ],
- "duration": 222.488
+ "duration": 222.835
 }
