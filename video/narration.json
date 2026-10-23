@@ -6,98 +6,164 @@
       "id": "question",
       "label": "01 · The question",
       "sentences": [
-        {"cap": "Physiological outcomes come from molecules interacting.",
-         "say": "Physiological outcomes come from molecules interacting."},
-        {"cap": "Those interactions change function, and function is driven by changes in shape and structure.",
-         "say": "Those interactions change function, and function is driven by changes in shape and structure."},
-        {"cap": "Pharmacology is what drugs do to that whole system.",
-         "say": "Pharmacology is what drugs do to that whole system."},
-        {"cap": "So how far can a chain of surrogates take us?",
-         "say": "So, how far can a chain of surrogates take us?"}
+        {
+          "cap": "Physiological outcomes come from molecules interacting.",
+          "say": "Physiological outcomes come from molecules interacting."
+        },
+        {
+          "cap": "Those interactions change function, and function is driven by changes in shape and structure.",
+          "say": "Those interactions change function, and function is driven by changes in shape and structure."
+        },
+        {
+          "cap": "Pharmacology is what drugs do to that whole system.",
+          "say": "Pharmacology is what drugs do to that whole system."
+        },
+        {
+          "cap": "So how far can a chain of surrogates take us?",
+          "say": "So, how far can a chain of surrogates take us?"
+        }
       ]
     },
     {
       "id": "ladder",
       "label": "02 · The ladder",
       "sentences": [
-        {"cap": "Biology has a ladder of scales: sequence, structure, atoms in motion, cells and tissue.",
-         "say": "Biology has a ladder of scales: sequence, structure, atoms in motion, cells and tissue."},
-        {"cap": "Machine learning now has a ladder alongside it, mostly open-weight, mostly new.",
-         "say": "Machine learning now has a ladder alongside it. Mostly open-weight, mostly new."},
-        {"cap": "Each rung swaps an expensive physical calculation for a learned one, and the catch is trust.",
-         "say": "Each rung swaps an expensive physical calculation for a learned one, and the catch is trust."},
-        {"cap": "In two days in Auckland, we climbed two rungs.",
-         "say": "In two days in Auckland, we climbed two rungs."}
+        {
+          "cap": "Biology has a ladder of scales: sequence, structure, atoms in motion, cells and tissue.",
+          "say": "Biology has a ladder of scales: sequence, structure, atoms in motion, cells and tissue."
+        },
+        {
+          "cap": "Machine learning now has a ladder alongside it, mostly open-weight, mostly new.",
+          "say": "Machine learning now has a ladder alongside it. Mostly open-weight, mostly new."
+        },
+        {
+          "cap": "Each rung swaps an expensive physical calculation for a learned one, and the catch is trust.",
+          "say": "Each rung swaps an expensive physical calculation for a learned one, and the catch is trust."
+        },
+        {
+          "cap": "In two days in Auckland, we climbed two rungs.",
+          "say": "In two days in Auckland, we climbed two rungs."
+        }
       ]
     },
     {
       "id": "screening",
       "label": "03 · Rung one: screening a billion molecules",
       "sentences": [
-        {"cap": "Docking a billion molecules takes about a hundred days.",
-         "say": "Docking a billion molecules takes about a hundred days."},
-        {"cap": "So you train a surrogate on docking scores, and dock only what it ranks highest.",
-         "say": "So you train a surrogate on docking scores, and dock only what it ranks highest."},
-        {"cap": "We rebuilt that surrogate: VDSAI Lightning, an AttentiveFP graph network replacing AMPL's GraphConv stack.",
-         "say": "We rebuilt that surrogate. V D S A I Lightning is an Attentive F P graph network, replacing ample's graph conv stack."},
-        {"cap": "It trained 13× faster, and after tuning it beat AMPL on every test metric.",
-         "say": "It trained thirteen times faster, and after tuning, it beat ample on every test metric."},
-        {"cap": "Then we scored 925 million molecules in under four and a half hours on a single workspace.",
-         "say": "Then we scored nine hundred and twenty-five million molecules in under four and a half hours, on a single workspace."},
-        {"cap": "Head to head, Lightning recovered 35% of the true docking top million. AMPL recovered 32%, ranking by size 2.6%, random picks 1.2%.",
-         "say": "Head to head, Lightning recovered thirty-five percent of the true docking top million. Ample recovered thirty-two, ranking by size, two point six, and random picks, one point two."},
-        {"cap": "And it used 381× fewer GPU hours.",
-         "say": "And it used three hundred and eighty-one times fewer G P U hours."},
-        {"cap": "Two dockings of the same molecules correlate at only 0.3, so the surrogate is now chasing a noisy target.",
-         "say": "Two dockings of the same molecules correlate at only zero point three, so the surrogate is now chasing a noisy target."}
+        {
+          "cap": "Docking a billion molecules takes about a hundred days.",
+          "say": "Docking a billion molecules takes about a hundred days."
+        },
+        {
+          "cap": "So you train a surrogate on docking scores, and dock only what it ranks highest.",
+          "say": "So you train a surrogate on docking scores, and dock only what it ranks highest."
+        },
+        {
+          "cap": "We rebuilt that surrogate: VDSAI Lightning, an AttentiveFP graph network replacing AMPL's GraphConv stack.",
+          "say": "We rebuilt that surrogate. V D S A I Lightning is an Attentive F P graph network, replacing ample's graph conv stack."
+        },
+        {
+          "cap": "On three and a half million molecules it trained 13× faster, and after tuning it beat AMPL on every test metric.",
+          "say": "On three and a half million molecules, it trained thirteen times faster, and after tuning, it beat ample on every test metric."
+        },
+        {
+          "cap": "Then we scored 925 million molecules in under four and a half hours on a single workspace.",
+          "say": "Then we scored nine hundred and twenty-five million molecules in under four and a half hours, on a single workspace."
+        },
+        {
+          "cap": "Head to head on a 98-million-molecule pool, Lightning recovered 35% of the true docking top million. AMPL recovered 32%, ranking by size 2.6%, random picks 1.2%.",
+          "say": "Head to head, on a ninety-eight million molecule pool, Lightning recovered thirty-five percent of the true docking top million. Ample recovered thirty-two, ranking by size, two point six, and random picks, one point two."
+        },
+        {
+          "cap": "And it used 381× fewer GPU hours.",
+          "say": "And it used three hundred and eighty-one times fewer G P U hours."
+        },
+        {
+          "cap": "Two dockings of the same molecules correlate at only 0.3, so the surrogate is now chasing a noisy target.",
+          "say": "Two dockings of the same molecules correlate at only zero point three, so the surrogate is now chasing a noisy target."
+        }
       ]
     },
     {
       "id": "physiology",
       "label": "04 · Rung two: from atoms to a cell",
       "sentences": [
-        {"cap": "Rung two carries a molecular signal all the way up to physiology.",
-         "say": "Rung two carries a molecular signal all the way up to physiology."},
-        {"cap": "Our pipeline turns a molecular dynamics trajectory into a model that a heart or kidney cell model can run.",
-         "say": "Our pipeline turns a molecular dynamics trajectory into a model that a heart or kidney cell model can run."},
-        {"cap": "It measures diffusion, learns the free-energy landscape, finds the barriers, and builds a bond graph, written out as standard CellML.",
-         "say": "It measures diffusion, learns the free energy landscape, finds the barriers, and builds a bond graph, written out as standard cell M L."},
-        {"cap": "The physics is in the architecture: the second law holds for any weights, at any point in training.",
-         "say": "The physics is in the architecture. The second law holds for any weights, at any point in training."},
-        {"cap": "An unconstrained network fits just as well, and breaks thermodynamics. Ours cannot make current from nothing.",
-         "say": "An unconstrained network fits just as well, and breaks thermodynamics. Ours cannot make current from nothing."},
-        {"cap": "On the KcsA potassium channel, with geometry from its crystal structure, the model gives a reversal potential of −91.3 mV.",
-         "say": "On the K C S A potassium channel, with geometry from its crystal structure, the model gives a reversal potential of minus ninety-one point three millivolts."},
-        {"cap": "That's the Nernst value, to numerical precision, across a hundred-fold range of potassium: the check a broken model fails.",
-         "say": "That's the Nernst value, to numerical precision, across a hundred-fold range of potassium. It's the check a broken model fails."}
+        {
+          "cap": "Rung two carries a molecular signal all the way up to physiology.",
+          "say": "Rung two carries a molecular signal all the way up to physiology."
+        },
+        {
+          "cap": "Our pipeline turns a molecular dynamics trajectory into a model that a heart or kidney cell model can run.",
+          "say": "Our pipeline turns a molecular dynamics trajectory into a model that a heart or kidney cell model can run."
+        },
+        {
+          "cap": "It measures diffusion, learns the free-energy landscape, finds the barriers, and builds a bond graph, a thermodynamic circuit, written out as standard CellML.",
+          "say": "It measures diffusion, learns the free energy landscape, finds the barriers, and builds a bond graph, a thermodynamic circuit, written out as standard cell M L."
+        },
+        {
+          "cap": "The physics is in the architecture: the second law holds for any weights, at any point in training.",
+          "say": "The physics is in the architecture. The second law holds for any weights, at any point in training."
+        },
+        {
+          "cap": "An unconstrained network fits just as well, and breaks thermodynamics. Ours cannot make current from nothing.",
+          "say": "An unconstrained network fits just as well, and breaks thermodynamics. Ours cannot make current from nothing."
+        },
+        {
+          "cap": "On the KcsA potassium channel, with geometry from its crystal structure, the model gives a reversal potential of −91.3 mV.",
+          "say": "On the K C S A potassium channel, with geometry from its crystal structure, the model gives a reversal potential of minus ninety-one point three millivolts."
+        },
+        {
+          "cap": "That's the Nernst value, to numerical precision, across a hundred-fold range of potassium: the check a broken model fails.",
+          "say": "That's the Nernst value, to numerical precision, across a hundred-fold range of potassium. It's the check a broken model fails."
+        }
       ]
     },
     {
       "id": "honesty",
       "label": "05 · How we tried not to fool ourselves",
       "sentences": [
-        {"cap": "Every number records where it came from, and a mutation audit breaks the code on purpose to prove the tests notice.",
-         "say": "Every number records where it came from, and a mutation audit breaks the code on purpose, to prove the tests notice."},
-        {"cap": "We report what didn't work, too.",
-         "say": "We report what didn't work, too."},
-        {"cap": "The KcsA landscape is constrained to published values, not yet learned, and conductance comes out more than twenty times too low.",
-         "say": "The K C S A landscape is constrained to published values, not yet learned. And conductance comes out more than twenty times too low."},
-        {"cap": "Potassium crosses KcsA by multi-ion knock-on, and our model is single-ion. So we've moved to gramicidin A, where one ion is the right model.",
-         "say": "Potassium crosses K C S A by multi-ion knock-on, and our model is single-ion. So we've moved to gramicidin A, where one ion is the right model."}
+        {
+          "cap": "Every number records where it came from, and a mutation audit breaks the code on purpose to prove the tests notice.",
+          "say": "Every number records where it came from, and a mutation audit breaks the code on purpose, to prove the tests notice."
+        },
+        {
+          "cap": "We report what didn't work, too.",
+          "say": "We report what didn't work, too."
+        },
+        {
+          "cap": "The KcsA landscape is constrained to published values, not yet learned, and trapped ions can't pin down the barriers.",
+          "say": "The K C S A landscape is constrained to published values, not yet learned. And trapped ions can't pin down the barriers."
+        },
+        {
+          "cap": "Conductance comes out more than 20× too low, because potassium crosses KcsA by multi-ion knock-on and our model is single-ion.",
+          "say": "Conductance comes out more than twenty times too low, because potassium crosses K C S A by multi-ion knock-on, and our model is single-ion."
+        },
+        {
+          "cap": "So we've moved to gramicidin A, where one ion is the right model, now built in a membrane and equilibrated.",
+          "say": "So we've moved to gramicidin A, where one ion is the right model, now built in a membrane and equilibrated."
+        }
       ]
     },
     {
       "id": "close",
       "label": "06 · Where this goes",
       "sentences": [
-        {"cap": "So how far can a chain of surrogates take us? Further than we expected, if every link carries its own evidence.",
-         "say": "So, how far can a chain of surrogates take us? Further than we expected, if every link carries its own evidence."},
-        {"cap": "Lightning makes billion-molecule screening an afternoon's work. The bond-graph pipeline turns atoms into a component physiologists can use.",
-         "say": "Lightning makes billion-molecule screening an afternoon's work. The bond graph pipeline turns atoms into a component physiologists can use."},
-        {"cap": "Next, we join them: screen the library, pose the hits, simulate them, and ask what each one does to a cell.",
-         "say": "Next, we join them. Screen the library, pose the hits, simulate them, and ask what each one does to a cell."},
-        {"cap": "It's all open source. Thanks for watching.",
-         "say": "It's all open source. Thanks for watching."}
+        {
+          "cap": "So how far can a chain of surrogates take us? Further than we expected, if every link carries its own evidence.",
+          "say": "So, how far can a chain of surrogates take us? Further than we expected, if every link carries its own evidence."
+        },
+        {
+          "cap": "Lightning makes billion-molecule screening an afternoon's work. The bond-graph pipeline turns atoms into a component physiologists can use.",
+          "say": "Lightning makes billion-molecule screening an afternoon's work. The bond graph pipeline turns atoms into a component physiologists can use."
+        },
+        {
+          "cap": "Next, we join them: screen the library, pose the hits, simulate them, and ask what each one does to a cell.",
+          "say": "Next, we join them. Screen the library, pose the hits, simulate them, and ask what each one does to a cell."
+        },
+        {
+          "cap": "It's all open source. Thanks for watching.",
+          "say": "It's all open source. Thanks for watching."
+        }
       ]
     }
   ]

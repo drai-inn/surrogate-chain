@@ -25,8 +25,14 @@ SR = 24000
 TITLE_HOLD = 2.2      # silent title card before the first word
 GAP_SENTENCE = 0.5
 GAP_SCENE = 1.3
-END_HOLD = 3.5        # end card after the last word
-MAX_CAP = 118         # characters per caption chunk before splitting
+END_HOLD = 5.0        # end card after the last word (room to read team names)
+CAP_LINGER = 0.45     # seconds a caption stays after its words end
+MAX_CAP = 112         # characters per caption chunk before splitting
+
+
+def vtt_time(x):
+    ms = int(round(x * 1000))
+    return f"{ms // 3600000:02d}:{ms // 60000 % 60:02d}:{ms // 1000 % 60:02d}.{ms % 1000:03d}"
 
 
 def split_caption(text):
@@ -50,6 +56,7 @@ def main():
     ap.add_argument("--work", default=os.environ.get("VIDEO_WORK", "/tmp/video-work"))
     ap.add_argument("--kcsa", default=None, help="kcsa.json from the team code")
     ap.add_argument("--models", default=os.environ.get("KOKORO_DIR", "."))
+    ap.add_argument("--vtt", default=os.path.join(HERE, "..", "assets", "video", "surrogate-chain.vtt"))
     args = ap.parse_args()
 
     spec = json.load(open(os.path.join(HERE, "narration.json")))
@@ -100,7 +107,7 @@ def main():
             timeline["sentences"].append({
                 "id": key, "scene": scene["id"], "index": n,
                 "start": round(t, 3), "end": round(t + dur, 3),
-                "cap": s["cap"], "chunks": chunks})
+                "cap": s["cap"], "say": s["say"], "chunks": chunks})
             pieces.append(audio)
             pieces.append(np.zeros(int(GAP_SENTENCE * SR), np.float32))
             t += dur + GAP_SENTENCE
@@ -111,6 +118,18 @@ def main():
     pieces.append(np.zeros(int((END_HOLD - GAP_SENTENCE) * SR), np.float32))
     timeline["scenes"][-1]["end"] = round(t, 3)
     timeline["duration"] = round(t, 3)
+
+    # captions stay up briefly after the audio, never overlapping the next one
+    chunks = [c for s in timeline["sentences"] for c in s["chunks"]]
+    for c, nxt in zip(chunks, chunks[1:] + [None]):
+        hold = c["end"] + CAP_LINGER
+        c["show_end"] = round(min(hold, nxt["start"]) if nxt else hold, 3)
+    vtt = ["WEBVTT", ""]
+    for i, c in enumerate(chunks, 1):
+        vtt += [str(i), f"{vtt_time(c['start'])} --> {vtt_time(c['show_end'])}", c["text"], ""]
+    os.makedirs(os.path.dirname(args.vtt), exist_ok=True)
+    with open(args.vtt, "w") as f:
+        f.write("\n".join(vtt))
 
     audio = np.concatenate(pieces)
     peak = float(np.max(np.abs(audio)))

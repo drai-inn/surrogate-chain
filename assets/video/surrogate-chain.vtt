@@ -1,0 +1,161 @@
+WEBVTT
+
+1
+00:00:02.200 --> 00:00:06.069
+Physiological outcomes come from molecules interacting.
+
+2
+00:00:06.119 --> 00:00:11.937
+Those interactions change function, and function is driven by changes in shape and structure.
+
+3
+00:00:11.987 --> 00:00:15.587
+Pharmacology is what drugs do to that whole system.
+
+4
+00:00:15.637 --> 00:00:18.588
+So how far can a chain of surrogates take us?
+
+5
+00:00:19.438 --> 00:00:25.776
+Biology has a ladder of scales: sequence, structure, atoms in motion, cells and tissue.
+
+6
+00:00:25.826 --> 00:00:31.084
+Machine learning now has a ladder alongside it, mostly open-weight, mostly new.
+
+7
+00:00:31.134 --> 00:00:37.014
+Each rung swaps an expensive physical calculation for a learned one, and the catch is trust.
+
+8
+00:00:37.064 --> 00:00:40.119
+In two days in Auckland, we climbed two rungs.
+
+9
+00:00:40.969 --> 00:00:44.617
+Docking a billion molecules takes about a hundred days.
+
+10
+00:00:44.667 --> 00:00:49.588
+So you train a surrogate on docking scores, and dock only what it ranks highest.
+
+11
+00:00:49.638 --> 00:00:57.748
+We rebuilt that surrogate: VDSAI Lightning, an AttentiveFP graph network replacing AMPL's GraphConv stack.
+
+12
+00:00:57.798 --> 00:01:05.869
+On three and a half million molecules it trained 13× faster, and after tuning it beat AMPL on every test metric.
+
+13
+00:01:05.919 --> 00:01:12.745
+Then we scored 925 million molecules in under four and a half hours on a single workspace.
+
+14
+00:01:12.795 --> 00:01:21.450
+Head to head on a 98-million-molecule pool, Lightning recovered 35% of the true docking top million.
+
+15
+00:01:21.450 --> 00:01:27.093
+AMPL recovered 32%, ranking by size 2.6%, random picks 1.2%.
+
+16
+00:01:27.143 --> 00:01:31.439
+And it used 381× fewer GPU hours.
+
+17
+00:01:31.489 --> 00:01:39.235
+Two dockings of the same molecules correlate at only 0.3, so the surrogate is now chasing a noisy target.
+
+18
+00:01:40.085 --> 00:01:44.756
+Rung two carries a molecular signal all the way up to physiology.
+
+19
+00:01:44.806 --> 00:01:52.094
+Our pipeline turns a molecular dynamics trajectory into a model that a heart or kidney cell model can run.
+
+20
+00:01:52.144 --> 00:01:56.944
+It measures diffusion, learns the free-energy landscape, finds the barriers,
+
+21
+00:01:56.944 --> 00:02:02.509
+and builds a bond graph, a thermodynamic circuit, written out as standard CellML.
+
+22
+00:02:02.559 --> 00:02:08.723
+The physics is in the architecture: the second law holds for any weights, at any point in training.
+
+23
+00:02:08.773 --> 00:02:15.832
+An unconstrained network fits just as well, and breaks thermodynamics. Ours cannot make current from nothing.
+
+24
+00:02:15.882 --> 00:02:21.960
+On the KcsA potassium channel, with geometry from its crystal structure,
+
+25
+00:02:21.960 --> 00:02:26.546
+the model gives a reversal potential of −91.3 mV.
+
+26
+00:02:26.596 --> 00:02:29.777
+That's the Nernst value, to numerical precision,
+
+27
+00:02:29.777 --> 00:02:35.065
+across a hundred-fold range of potassium: the check a broken model fails.
+
+28
+00:02:35.915 --> 00:02:38.218
+Every number records where it came from,
+
+29
+00:02:38.218 --> 00:02:42.928
+and a mutation audit breaks the code on purpose to prove the tests notice.
+
+30
+00:02:42.978 --> 00:02:45.055
+We report what didn't work, too.
+
+31
+00:02:45.105 --> 00:02:48.734
+The KcsA landscape is constrained to published values,
+
+32
+00:02:48.734 --> 00:02:53.350
+not yet learned, and trapped ions can't pin down the barriers.
+
+33
+00:02:53.400 --> 00:02:56.617
+Conductance comes out more than 20× too low,
+
+34
+00:02:56.617 --> 00:03:02.988
+because potassium crosses KcsA by multi-ion knock-on and our model is single-ion.
+
+35
+00:03:03.038 --> 00:03:10.328
+So we've moved to gramicidin A, where one ion is the right model, now built in a membrane and equilibrated.
+
+36
+00:03:11.178 --> 00:03:18.284
+So how far can a chain of surrogates take us? Further than we expected, if every link carries its own evidence.
+
+37
+00:03:18.334 --> 00:03:22.481
+Lightning makes billion-molecule screening an afternoon's work.
+
+38
+00:03:22.481 --> 00:03:27.867
+The bond-graph pipeline turns atoms into a component physiologists can use.
+
+39
+00:03:27.917 --> 00:03:34.929
+Next, we join them: screen the library, pose the hits, simulate them, and ask what each one does to a cell.
+
+40
+00:03:34.979 --> 00:03:37.938
+It's all open source. Thanks for watching.
