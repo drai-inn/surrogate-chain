@@ -1,0 +1,643 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Surrogate chain video</title>
+<meta name="viewport" content="width=1920, height=1080">
+<style>
+:root{
+  --void:#141C36; --void-deep:#0D1226; --panel:#1D2A4F; --panel-2:#22315C;
+  --line:#2C3A66; --line-2:#3B4B7E;
+  --text:#EEF1FB; --soft:#9AA7CD; --mute:#6D789D;
+  --indigo:#6A84DE; --indigo-hi:#9AADF0; --gold:#B8893C; --gold-hi:#DDB067;
+  --gray:#7D869F; --gray-2:#566079; --cyan:#00D3F6;
+  --sans:'Inter',system-ui,sans-serif; --mono:'JetBrains Mono',ui-monospace,monospace;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;background:var(--void-deep)}
+#stage{position:relative;width:1920px;height:1080px;overflow:hidden;color:var(--text);font-family:var(--sans);
+  background:radial-gradient(1500px 1000px at 28% 18%,#1A2550 0%,var(--void) 48%,var(--void-deep) 100%)}
+.scene{position:absolute;left:0;top:0;width:1920px;height:1080px}
+.abs{position:absolute}
+.box{position:absolute;background:var(--panel);border:2px solid var(--line);border-radius:18px}
+.k{font-family:var(--mono);font-weight:500;text-transform:uppercase;letter-spacing:.12em;font-size:22px;color:var(--soft);line-height:1.2}
+.h1{font-weight:800;letter-spacing:-.04em;line-height:1.02}
+.t{font-weight:700;letter-spacing:-.018em;line-height:1.12}
+.soft{color:var(--soft)}
+.num{font-feature-settings:'tnum' 1}
+.flexc{display:flex;flex-direction:column;justify-content:center}
+.photo{position:absolute;left:-40px;top:-40px;width:2000px;height:1160px;background-size:cover;background-position:center;filter:saturate(.55) contrast(.95)}
+.shade{position:absolute;inset:0;background:linear-gradient(180deg,rgba(13,18,38,.70) 0%,rgba(20,28,54,.86) 55%,rgba(13,18,38,.97) 100%)}
+sup{font-size:.6em;vertical-align:.62em;line-height:0}
+#top{position:absolute;left:96px;right:96px;top:40px;height:40px;display:flex;justify-content:space-between;align-items:center}
+#label{display:flex;align-items:center;gap:16px;font-size:23px;color:var(--soft)}
+#label i{display:block;width:12px;height:12px;border-radius:50%;background:var(--cyan)}
+#brand{font-size:20px;color:var(--mute);letter-spacing:.06em;text-transform:none}
+#prog{position:absolute;left:0;top:0;height:5px;background:var(--indigo)}
+#capband{position:absolute;left:0;bottom:0;width:1920px;height:176px;background:rgba(8,12,28,.95);border-top:1px solid #27345F;display:flex;align-items:center;justify-content:center}
+#cap{max-width:1700px;text-align:center;font-weight:600;font-size:46px;line-height:1.27;color:#F5F7FE;letter-spacing:-.006em}
+.rung{display:flex;flex-direction:column;justify-content:center;padding-left:38px;overflow:hidden}
+.rung .acc{position:absolute;left:0;top:0;bottom:0;width:8px}
+.bar{position:absolute;border-radius:0 8px 8px 0}
+.row{position:absolute;display:flex;align-items:flex-start;gap:26px}
+.mark{flex:none;width:52px;height:52px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:30px}
+#team{display:grid;grid-template-columns:repeat(3,500px);column-gap:44px;row-gap:16px;margin-top:46px;text-align:left}
+#team .p{display:flex;gap:14px;align-items:baseline}
+#team .dot{flex:none;width:12px;height:12px;border-radius:50%;transform:translateY(-3px)}
+#team .n{font-weight:600;font-size:30px;letter-spacing:-.01em;line-height:1.15}
+#team .a{font-weight:500;font-size:20px;color:var(--soft);line-height:1.25;margin-top:2px}
+#affils{margin-top:22px;font-size:19px;color:var(--soft);max-width:1560px;line-height:1.4}
+</style>
+<script src="data.js"></script>
+</head>
+<body>
+<div id="stage">
+  <section class="scene" id="sc-question"></section>
+  <section class="scene" id="sc-ladder"></section>
+  <section class="scene" id="sc-screening"></section>
+  <section class="scene" id="sc-physiology"></section>
+  <section class="scene" id="sc-honesty"></section>
+  <section class="scene" id="sc-close"></section>
+  <div id="prog"></div>
+  <div id="top"><div id="label" class="k"><i></i><span id="labeltxt"></span></div><div id="brand" class="k">drai-inn / surrogate-chain</div></div>
+  <div id="capband"><div id="cap"></div></div>
+</div>
+<script>
+(function () {
+'use strict';
+const TL = window.TIMELINE, K = window.KCSA;
+const C = {indigo:'#6A84DE', indigoHi:'#9AADF0', gold:'#B8893C', goldHi:'#DDB067', gray:'#7D869F', gray2:'#566079',
+           text:'#EEF1FB', soft:'#9AA7CD', mute:'#6D789D', line:'#2C3A66', line2:'#3B4B7E', panel:'#1D2A4F', cyan:'#00D3F6'};
+const $ = id => document.getElementById(id);
+const clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
+const ramp = (t, a, b) => b <= a ? (t >= a ? 1 : 0) : clamp((t - a) / (b - a));
+const eo = x => 1 - Math.pow(1 - x, 3);
+const eio = x => x < .5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2;
+const rv = (t, a, d = .55) => eo(ramp(t, a, a + d));
+const lerp = (a, b, p) => a + (b - a) * p;
+const SC = {}, SN = {};
+TL.scenes.forEach(s => SC[s.id] = s);
+TL.sentences.forEach(s => SN[s.id] = s);
+const S = (sc, i) => SN[sc + '-' + i];
+const missing = [];
+// time at which `word` is spoken, estimated from its position in the spoken text
+function W(sc, i, word, off = 0) {
+  const s = S(sc, i), txt = s.say || s.cap;
+  let k = txt.indexOf(word);
+  if (k < 0) { missing.push(sc + '-' + i + ':' + word); k = 0; }
+  return s.start + (k / txt.length) * (s.end - s.start) + off;
+}
+window.__missingWords = missing;
+function mk(parent, cls, css, html) {
+  const d = document.createElement('div');
+  if (cls) d.className = cls;
+  if (css) d.style.cssText = css;
+  if (html != null) d.innerHTML = html;
+  parent.appendChild(d);
+  return d;
+}
+const NS = 'http://www.w3.org/2000/svg';
+function sv(parent, tag, attrs) {
+  const e = document.createElementNS(NS, tag);
+  for (const k in attrs) e.setAttribute(k, attrs[k]);
+  parent.appendChild(e);
+  return e;
+}
+function show(el, p, dy = 26, dx = 0) {
+  el.style.opacity = p.toFixed(3);
+  el.style.transform = (dy || dx) ? `translate(${(dx * (1 - p)).toFixed(1)}px,${(dy * (1 - p)).toFixed(1)}px)` : '';
+  el.style.visibility = p <= 0.002 ? 'hidden' : 'visible';
+}
+const arrowH = (w, c = C.soft, sw = 3) =>
+  `<svg width="${w}" height="30" viewBox="0 0 ${w} 30" style="display:block"><line x1="3" y1="15" x2="${w - 6}" y2="15" stroke="${c}" stroke-width="${sw}" stroke-linecap="round"/><path d="M${w - 17} 5 L${w - 4} 15 L${w - 17} 25" fill="none" stroke="${c}" stroke-width="${sw}" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+const arrowV = (h, c = C.soft) =>
+  `<svg width="30" height="${h}" viewBox="0 0 30 ${h}" style="display:block"><line x1="15" y1="3" x2="15" y2="${h - 6}" stroke="${c}" stroke-width="3" stroke-linecap="round"/><path d="M5 ${h - 17} L15 ${h - 4} L25 ${h - 17}" fill="none" stroke="${c}" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+const fmtInt = n => Math.round(n).toLocaleString('en-US');
+// phase visibility inside a scene: on from a to b (sentence start times)
+const phase = (t, a, b) => (a === -Infinity ? 1 : rv(t, a - .45, .45)) * (b === Infinity ? 1 : 1 - ramp(t, b - .45, b - .1));
+const R = {};   // per-scene render functions
+
+/* ---------------- 1 · The question ---------------- */
+{
+  const root = $('sc-question');
+  const photo = mk(root, 'photo', "background-image:url('../assets/photos/2.jpg')");
+  mk(root, 'shade');
+  const title = mk(root, 'abs', 'left:0;width:1920px;top:282px;text-align:center;transform-origin:960px 0');
+  mk(title, 'k', 'color:var(--cyan);font-size:26px;letter-spacing:.2em', 'OSI Hackathon 2026 · Auckland');
+  const h = mk(title, 'h1', 'font-size:120px;margin-top:38px', 'How far can a chain of<br><span id="q-sur">surrogates</span> take us?');
+  const sub = mk(title, '', 'font-size:34px;color:var(--soft);margin-top:42px;font-weight:500;letter-spacing:-.01em',
+    'Two rungs of a surrogate ladder for biomolecular interactions');
+  const sur = h.querySelector('#q-sur');
+  sur.style.cssText = 'background-image:linear-gradient(#B8893C,#B8893C);background-repeat:no-repeat;background-position:0 96%;background-size:0% 9px;padding-bottom:4px';
+  const labels = [['01', 'Molecules', 'interact'], ['02', 'Shape & structure', 'change'], ['03', 'Function', 'changes'], ['04', 'Physiology', 'the outcome']];
+  const bw = 330, gap = 74, x0 = (1920 - (4 * bw + 3 * gap)) / 2, y0 = 470;
+  const boxes = labels.map((l, i) => mk(root, 'box flexc', `left:${x0 + i * (bw + gap)}px;top:${y0}px;width:${bw}px;height:160px;padding:0 30px`,
+    `<div class="k" style="font-size:19px;color:var(--mute)">${l[0]}</div><div class="t" style="font-size:38px;margin-top:10px">${l[1]}</div><div class="soft" style="font-size:26px;margin-top:4px">${l[2]}</div>`));
+  const arrows = [0, 1, 2].map(i => mk(root, 'abs', `left:${x0 + (i + 1) * bw + i * gap + 12}px;top:${y0 + 65}px`, arrowH(gap - 24)));
+  const brk = mk(root, 'abs', `left:${x0}px;top:${y0 + 196}px;width:${4 * bw + 3 * gap}px;height:26px;border:3px solid #B8893C;border-top:none;border-radius:0 0 14px 14px`);
+  const pharm = mk(root, 'abs', `left:0;width:1920px;top:${y0 + 250}px;display:flex;justify-content:center;align-items:center;gap:22px`,
+    `<span class="k" style="background:#B8893C;color:#141C36;font-weight:700;padding:8px 16px;border-radius:999px;font-size:22px">Drugs</span><span class="t" style="font-size:36px">act on the whole system: <span style="color:var(--gold-hi)">pharmacology</span></span>`);
+  const tBox = [W('question', 0, 'molecules'), W('question', 1, 'shape', -.2), W('question', 1, 'change function'), W('question', 0, 'Physiological', .15)];
+  R.question = t => {
+    const mv = eio(ramp(t, 2.35, 3.35));
+    title.style.transform = `translateY(${(-172 * mv).toFixed(1)}px) scale(${(1 - .36 * mv).toFixed(4)})`;
+    sub.style.opacity = (1 - ramp(t, 2.3, 2.9)).toFixed(3);
+    photo.style.opacity = lerp(.34, .13, mv).toFixed(3);
+    photo.style.transform = `scale(${(1.02 + .05 * t / SC.question.end).toFixed(4)})`;
+    boxes.forEach((b, i) => show(b, rv(t, tBox[i])));
+    arrows.forEach((a, i) => show(a, rv(t, Math.max(tBox[i], tBox[i + 1]) + .2), 0, -16));
+    const pb = rv(t, W('question', 2, 'drugs', -.3), .7);
+    brk.style.opacity = pb; brk.style.clipPath = `inset(0 ${(50 * (1 - pb)).toFixed(1)}% 0 ${(50 * (1 - pb)).toFixed(1)}%)`;
+    show(pharm, rv(t, W('question', 2, 'drugs')));
+    const q = rv(t, W('question', 3, 'chain', -.2), .8);
+    sur.style.backgroundSize = `${(100 * q).toFixed(1)}% 9px`;
+    sur.style.color = q > .02 ? `rgba(221,176,103,${q.toFixed(3)})` : '';
+    if (q < .02) sur.style.color = '';
+    title.style.filter = '';
+  };
+}
+
+/* ---------------- 2 · The ladder ---------------- */
+{
+  const root = $('sc-ladder');
+  const rows = [['Sequence', 'Association models', 'over sequence'], ['Structure', '3D-aware models', 'over structure'],
+                ['Atoms in motion', 'Interatomic potentials', 'over atoms & motion'], ['Cells & tissue', 'Multi-scale models', 'over cells & tissue']];
+  const rowTop = i => 706 - i * 160, BX = 230, BW = 520, MX = 900, MW = 540;
+  mk(root, 'k abs', `left:${BX}px;top:150px`, 'Biology · scales');
+  mk(root, 'k abs', `left:${MX}px;top:150px`, 'Machine learning · surrogates');
+  [[BX, BW], [MX, MW]].forEach(([x, w]) => {
+    mk(root, 'abs', `left:${x - 22}px;top:204px;width:7px;height:646px;background:#2C3A66;border-radius:4px`);
+    mk(root, 'abs', `left:${x + w + 15}px;top:204px;width:7px;height:646px;background:#2C3A66;border-radius:4px`);
+  });
+  const bio = rows.map((r, i) => {
+    const b = mk(root, 'box rung', `left:${BX}px;top:${rowTop(i)}px;width:${BW}px;height:118px`, `<div class="acc"></div><div class="t" style="font-size:40px">${r[0]}</div>`);
+    return b;
+  });
+  const ml = rows.map((r, i) => mk(root, 'box rung', `left:${MX}px;top:${rowTop(i)}px;width:${MW}px;height:118px`,
+    `<div class="acc"></div><div class="t" style="font-size:37px">${r[1]}</div><div class="k" style="font-size:18px;margin-top:8px;color:var(--soft)">${r[2]}</div>`));
+  const conn = rows.map((r, i) => mk(root, 'abs', `left:${BX + BW + 34}px;top:${rowTop(i) + 44}px`, arrowH(MX - BX - BW - 68, C.soft)));
+  const tag = mk(root, 'abs k', `left:${MX}px;top:186px;color:var(--cyan);font-size:18px;letter-spacing:.14em`, '');
+  tag.style.top = '150px'; tag.style.left = `${MX + 440}px`; tag.style.display = 'none';
+  const ow = mk(root, 'abs k', `left:${MX}px;top:868px;font-size:19px;color:var(--soft)`, 'mostly open-weight · mostly new');
+  ow.style.top = '178px'; ow.style.color = 'var(--indigo-hi)';
+  const trust = mk(root, 'box flexc', 'left:1508px;top:336px;width:320px;height:310px;padding:0 32px;border-color:#B8893C',
+    `<div class="k" style="font-size:19px;color:var(--gold-hi)">The catch</div><div class="h1" style="font-size:72px;margin:6px 0 18px">Trust</div>` +
+    ['ground truth?', 'simple baseline?', 'where it breaks?'].map(s => `<div class="k" style="font-size:19px;letter-spacing:.06em;text-transform:none;margin-top:6px">${s}</div>`).join(''));
+  const brackets = [[0, 1, C.indigo, C.indigoHi, 'Rung 1', 'Screening a billion molecules'], [2, 3, C.gold, C.goldHi, 'Rung 2', 'Atoms to a cell']].map(([a, b, c, ch, k, s]) => {
+    const top = rowTop(b), bot = rowTop(a) + 118;
+    const line = mk(root, 'abs', `left:1500px;top:${top}px;width:6px;height:${bot - top}px;background:${c};border-radius:3px`);
+    const lab = mk(root, 'abs', `left:1534px;top:${top + (bot - top) / 2 - 70}px;width:300px`,
+      `<div class="k" style="color:${ch};font-size:22px">${k}</div><div class="t" style="font-size:38px;margin-top:8px">${s}</div>`);
+    return {line, lab, rows: [a, b], c, top, bot};
+  });
+  const tBio = [W('ladder', 0, 'sequence'), W('ladder', 0, 'structure'), W('ladder', 0, 'atoms'), W('ladder', 0, 'cells')];
+  const s1 = S('ladder', 1);
+  const tMl = [0, 1, 2, 3].map(i => lerp(s1.start, W('ladder', 1, 'Mostly'), .1 + .22 * i));
+  const tConn = [0, 1, 2, 3].map(i => lerp(S('ladder', 2).start, W('ladder', 2, 'learned one'), .15 + .25 * i));
+  const tR = [W('ladder', 3, 'climbed', -.1), W('ladder', 3, 'two rungs')];
+  R.ladder = t => {
+    const hl = brackets.map((b, j) => rv(t, tR[j], .6));
+    rows.forEach((r, i) => {
+      const j = i < 2 ? 0 : 1, h = hl[j], col = brackets[j].c;
+      const pb = rv(t, tBio[i], .5), pm = rv(t, tMl[i], .5);
+      bio[i].style.opacity = (.2 + .8 * pb).toFixed(3);
+      bio[i].querySelector('.acc').style.background = h > .01 ? col : '#C9D2EE';
+      bio[i].querySelector('.acc').style.opacity = pb.toFixed(3);
+      ml[i].style.opacity = (.2 + .8 * pm).toFixed(3);
+      ml[i].querySelector('.acc').style.background = h > .01 ? col : C.indigo;
+      ml[i].querySelector('.acc').style.opacity = pm.toFixed(3);
+      [bio[i], ml[i]].forEach(b => {
+        b.style.borderColor = h > .01 ? col : '#2C3A66';
+        b.style.boxShadow = h > .01 ? `0 0 ${(36 * h).toFixed(0)}px ${col}55` : 'none';
+        b.style.background = h > .01 ? `rgba(34,49,92,${(.6 + .4 * h).toFixed(2)})` : '#1D2A4F';
+      });
+      show(conn[i], rv(t, tConn[i], .45), 0, -20);
+    });
+    show(ow, rv(t, W('ladder', 1, 'Mostly')), 10);
+    show(trust, rv(t, W('ladder', 2, 'trust', -.3)) * (1 - ramp(t, S('ladder', 3).start - .2, S('ladder', 3).start + .2)), 20);
+    brackets.forEach((b, j) => {
+      const p = hl[j];
+      b.line.style.opacity = p.toFixed(3);
+      b.line.style.clipPath = `inset(${(50 * (1 - p)).toFixed(1)}% 0 ${(50 * (1 - p)).toFixed(1)}% 0)`;
+      show(b.lab, p, 0, -18);
+    });
+  };
+}
+
+/* ---------------- 3 · Screening ---------------- */
+{
+  const root = $('sc-screening');
+  const A = mk(root, 'abs', 'inset:0'), B = mk(root, 'abs', 'inset:0'), Cc = mk(root, 'abs', 'inset:0'), D = mk(root, 'abs', 'inset:0');
+  // A: the cost of docking, then the surrogate loop
+  const bigN = mk(A, 'abs h1 num', 'left:0;width:1920px;top:150px;text-align:center;font-size:150px', '1,000,000,000');
+  const bigL = mk(A, 'abs k', 'left:0;width:1920px;top:322px;text-align:center;font-size:26px', 'molecules to dock against one target');
+  const clock = mk(A, 'abs', 'left:330px;top:400px;width:1260px;height:80px');
+  clock.innerHTML = `<div class="k" style="position:absolute;left:0;top:0;font-size:20px">Docking</div>
+    <div class="t" style="position:absolute;right:0;top:-12px;font-size:44px">≈ 100 days</div>
+    <div style="position:absolute;left:0;right:0;top:50px;height:16px;border-radius:8px;background:#1D2A4F;border:1px solid #2C3A66"></div>
+    <div id="sc-fill" style="position:absolute;left:0;top:50px;height:16px;border-radius:8px;background:#7D869F"></div>`;
+  const fill = clock.querySelector('#sc-fill');
+  const flow = [['Dock a sample', 'train on its scores'], ['Surrogate ranks', 'the whole library'], ['Dock only the top', 'confirm the best picks']];
+  const fw = 470, fg = 96, fx = (1920 - (3 * fw + 2 * fg)) / 2;
+  const fbox = flow.map((f, i) => mk(A, 'box flexc', `left:${fx + i * (fw + fg)}px;top:560px;width:${fw}px;height:170px;padding:0 36px;${i === 1 ? 'border-color:#6A84DE' : ''}`,
+    `<div class="t" style="font-size:40px">${f[0]}</div><div class="soft" style="font-size:27px;margin-top:8px">${f[1]}</div>`));
+  const farr = [0, 1].map(i => mk(A, 'abs', `left:${fx + (i + 1) * fw + i * fg + 16}px;top:630px`, arrowH(fg - 32)));
+  // B: the model swap and training numbers
+  const cw = 690, cx1 = 165, cx2 = 1920 - 165 - cw;
+  const ampl = mk(B, 'box flexc', `left:${cx1}px;top:160px;width:${cw}px;height:270px;padding:0 44px;border-color:#B8893C`,
+    `<div class="k" style="color:var(--gold-hi)">Incumbent</div><div class="h1" style="font-size:72px;margin-top:10px;color:var(--gold-hi)">AMPL</div><div class="soft" style="font-size:30px;margin-top:12px">GraphConv · TensorFlow</div>`);
+  const light = mk(B, 'box flexc', `left:${cx2}px;top:160px;width:${cw}px;height:270px;padding:0 44px;border-color:#6A84DE;background:#202F5A`,
+    `<div class="k" style="color:var(--indigo-hi)">Rebuilt</div><div class="h1" style="font-size:72px;margin-top:10px;color:var(--indigo-hi)">VDSAI Lightning</div><div class="soft" style="font-size:30px;margin-top:12px">AttentiveFP · PyTorch Geometric + Lightning</div>`);
+  const swap = mk(B, 'abs', `left:${cx1 + cw + 40}px;top:280px`, arrowH(cx2 - cx1 - cw - 80, C.indigoHi, 4));
+  const tiles = [['13×', 'faster training', '2.4 h vs 32.4 h · 3.5M molecules'], ['0.752', 'test R², tuned', 'AMPL 0.690 · higher is better'], ['4.41', 'test RMSE, tuned', 'AMPL 4.61 · lower is better']];
+  const tw = 510, tg = (1920 - 330 - 3 * tw) / 2;
+  const tl = tiles.map((x, i) => mk(B, 'box flexc', `left:${165 + i * (tw + tg)}px;top:490px;width:${tw}px;height:300px;padding:0 40px`,
+    `<div class="h1 num" style="font-size:108px;color:var(--indigo-hi)">${x[0]}</div><div class="t" style="font-size:34px;margin-top:12px">${x[1]}</div><div class="k" style="font-size:18px;margin-top:14px;letter-spacing:.06em">${x[2]}</div>`));
+  // C: the billion-molecule screen
+  const ctr = mk(Cc, 'abs h1 num', 'left:0;width:1920px;top:176px;text-align:center;font-size:196px;color:var(--indigo-hi)', '0');
+  const ctrL = mk(Cc, 'abs t', 'left:0;width:1920px;top:400px;text-align:center;font-size:46px', 'ZINC molecules scored by Lightning');
+  const chips = [['4 h 27 min', 'wall clock'], ['1 workspace', 'no cluster'], ['≈ 540×', 'faster than docking them']].map((c, i) =>
+    mk(Cc, 'box flexc', `left:${165 + i * (tw + tg)}px;top:540px;width:${tw}px;height:200px;padding:0 40px`,
+      `<div class="h1 num" style="font-size:72px">${c[0]}</div><div class="k" style="font-size:20px;margin-top:14px">${c[1]}</div>`));
+  // D: head to head on pool_3
+  mk(D, 'abs h1', 'left:120px;top:150px;font-size:50px', 'Recall of the true docking top 1M');
+  mk(D, 'abs k', 'left:122px;top:220px;font-size:20px', 'pool_3 · 98.3M molecules · higher is better');
+  const bars = [['Lightning', 35.0, C.indigo, C.indigoHi], ['AMPL', 32.3, C.gold, C.goldHi], ['Rank by size', 2.6, C.gray, C.text], ['Random', 1.2, C.gray2, C.text]];
+  const BX0 = 420, BWID = 720, BMAX = 40, by = i => 296 + i * 118;
+  [0, 10, 20, 30, 40].forEach(v => {
+    const x = BX0 + BWID * v / BMAX;
+    mk(D, 'abs', `left:${x}px;top:280px;width:1px;height:470px;background:#2C3A66`);
+    mk(D, 'abs k num', `left:${x - 40}px;top:758px;width:80px;text-align:center;font-size:18px;color:var(--mute)`, v + '%');
+  });
+  const bEls = bars.map((b, i) => {
+    const lab = mk(D, 'abs t', `left:100px;width:${BX0 - 130}px;text-align:right;top:${by(i) + 18}px;font-size:34px;${i > 1 ? 'color:var(--soft)' : ''}`, b[0]);
+    const bar = mk(D, 'bar', `left:${BX0}px;top:${by(i)}px;height:84px;background:${b[2]}`);
+    const val = mk(D, 'abs h1 num', `top:${by(i) + 14}px;font-size:48px;color:${b[3]}`, '');
+    return {lab, bar, val, v: b[1]};
+  });
+  const gpu = mk(D, 'abs', 'left:1270px;top:150px;width:540px;height:350px');
+  gpu.innerHTML = `<div class="k" style="font-size:20px">GPU hours to screen pool_3</div>
+    <div class="h1 num" style="font-size:132px;color:var(--indigo-hi);margin-top:6px">381×</div>
+    <div class="t" style="font-size:34px;margin-top:-2px">fewer GPU hours</div>`;
+  const gB = [['AMPL', '166.4 h', C.gold, 166.4], ['Lightning', '0.44 h', C.indigo, .44]].map((g, i) => {
+    const l = mk(gpu, 'abs k num', `left:0;top:${250 + i * 50}px;font-size:19px;width:140px;letter-spacing:.06em;text-transform:none`, g[0]);
+    const b = mk(gpu, 'abs', `left:140px;top:${250 + i * 50 + 2}px;height:22px;border-radius:0 5px 5px 0;background:${g[2]}`);
+    const v = mk(gpu, 'abs k num', `top:${250 + i * 50}px;font-size:19px;letter-spacing:.04em;text-transform:none;color:var(--text)`, g[1]);
+    return {b, v, w: Math.max(4, 330 * g[3] / 166.4)};
+  });
+  const noise = mk(D, 'box flexc', 'left:1270px;top:540px;width:540px;height:250px;padding:0 38px',
+    `<div class="k" style="font-size:20px">Docking vs itself</div><div class="h1 num" style="font-size:84px;margin-top:8px">r = 0.30</div><div class="soft" style="font-size:26px;margin-top:8px">same molecules, docked twice: the ceiling for any surrogate</div>`);
+  const s = i => S('screening', i);
+  const tBars = [W('screening', 5, 'Lightning recovered'), W('screening', 5, 'Ample recovered'), W('screening', 5, 'ranking by size'), W('screening', 5, 'random picks')];
+  R.screening = t => {
+    const pa = phase(t, -Infinity, s(2).start), pb = phase(t, s(2).start, s(4).start), pc = phase(t, s(4).start, s(5).start), pd = phase(t, s(5).start, Infinity);
+    [[A, pa], [B, pb], [Cc, pc], [D, pd]].forEach(([el, p]) => { el.style.opacity = p.toFixed(3); el.style.display = p > .002 ? 'block' : 'none'; });
+    if (pa > .002) {
+      show(bigN, rv(t, s(0).start - .3, .6), 20); show(bigL, rv(t, s(0).start + .1), 12);
+      show(clock, rv(t, W('screening', 0, 'takes'), .5), 12);
+      fill.style.width = (1260 * (.006 + .05 * eio(ramp(t, W('screening', 0, 'takes'), s(1).end)))).toFixed(1) + 'px';
+      const tf = [W('screening', 1, 'train'), W('screening', 1, 'docking scores', .5), W('screening', 1, 'dock only')];
+      fbox.forEach((b, i) => show(b, rv(t, tf[i])));
+      farr.forEach((a, i) => show(a, rv(t, tf[i + 1] - .1), 0, -16));
+    }
+    if (pb > .002) {
+      show(light, rv(t, W('screening', 2, 'V D S A I', -.2)), 20);
+      show(ampl, rv(t, W('screening', 2, 'replacing', -.2)), 20);
+      show(swap, rv(t, W('screening', 2, 'replacing', .4)), 0, -30);
+      const tt = [W('screening', 3, 'thirteen', -.2), W('screening', 3, 'beat', -.1), W('screening', 3, 'every test')];
+      tl.forEach((x, i) => show(x, rv(t, tt[i])));
+    }
+    if (pc > .002) {
+      const pn = eo(ramp(t, s(4).start - .2, W('screening', 4, 'molecules', .2)));
+      ctr.textContent = fmtInt(925e6 * pn);
+      show(ctrL, rv(t, W('screening', 4, 'molecules', -.3)), 12);
+      const tc = [W('screening', 4, 'four and a half', -.3), W('screening', 4, 'single', -.3), W('screening', 4, 'workspace', .6)];
+      chips.forEach((c, i) => show(c, rv(t, tc[i])));
+    }
+    if (pd > .002) {
+      bEls.forEach((b, i) => {
+        const p = eo(ramp(t, tBars[i] - .1, tBars[i] + 1.0));
+        const w = BWID * b.v / BMAX * p;
+        b.bar.style.width = w.toFixed(1) + 'px';
+        b.val.style.left = (BX0 + w + 20).toFixed(1) + 'px';
+        b.val.textContent = (b.v * p).toFixed(1) + '%';
+        b.val.style.opacity = ramp(t, tBars[i] - .1, tBars[i] + .2).toFixed(3);
+        b.lab.style.opacity = (.35 + .65 * ramp(t, tBars[i] - .3, tBars[i])).toFixed(3);
+      });
+      show(gpu, rv(t, s(6).start - .1), 20);
+      gB.forEach((g, i) => {
+        const p = eo(ramp(t, s(6).start + .3 + .5 * i, s(6).start + 1.3 + .5 * i));
+        g.b.style.width = (g.w * p).toFixed(1) + 'px';
+        g.v.style.left = (140 + g.w * p + 14).toFixed(1) + 'px';
+        g.v.style.opacity = p.toFixed(3);
+      });
+      show(noise, rv(t, s(7).start - .1), 20);
+    }
+  };
+}
+
+/* ---------------- 4 · Physiology ---------------- */
+{
+  const root = $('sc-physiology');
+  const A = mk(root, 'abs', 'inset:0'), B = mk(root, 'abs', 'inset:0'), Cc = mk(root, 'abs', 'inset:0');
+  // A: pipeline
+  const head = mk(A, 'abs h1', 'left:96px;top:150px;font-size:64px;width:1728px', 'Carrying a molecular signal up to physiology');
+  const span = mk(A, 'abs', 'left:96px;top:418px;width:1728px;height:4px;border-top:4px dashed #3B4B7E');
+  const endL = mk(A, 'abs k', 'left:96px;top:450px;font-size:20px', 'atoms');
+  const endR = mk(A, 'abs k', 'left:1624px;top:450px;width:200px;text-align:right;font-size:20px', 'cell');
+  const steps = [['MD trajectory', 'atoms over time'], ['Measure D(z)', 'diffusivity'], ['Learn F(z)', 'free-energy landscape'], ['Find barriers', 'rates between sites'], ['Bond graph', 'a thermodynamic circuit'], ['CellML', 'standard model format']];
+  const pw = 254, pg = (1728 - 6 * pw) / 5;
+  const pbox = steps.map((s, i) => mk(A, 'box flexc', `left:${96 + i * (pw + pg)}px;top:300px;width:${pw}px;height:236px;padding:0 24px;${i >= 4 ? 'border-color:#6A84DE;background:#202F5A' : ''}`,
+    `<div class="k" style="font-size:18px;color:var(--mute)">${String(i + 1).padStart(2, '0')}</div><div class="t" style="font-size:35px;margin-top:10px">${s[0]}</div><div class="soft" style="font-size:24px;margin-top:8px;line-height:1.25">${s[1]}</div>`));
+  const parr = [0, 1, 2, 3, 4].map(i => mk(A, 'abs', `left:${96 + (i + 1) * pw + i * pg + 4}px;top:403px`, arrowH(pg - 8, C.soft, 3)));
+  const down = mk(A, 'abs', `left:${96 + 5 * (pw + pg) + pw / 2 - 15}px;top:548px`, arrowV(70));
+  const cell = mk(A, 'box flexc', 'left:1124px;top:632px;width:700px;height:150px;padding:0 40px;border-color:#00D3F6',
+    `<div class="k" style="font-size:19px;color:var(--cyan)">Runs inside</div><div class="t" style="font-size:40px;margin-top:8px">a heart or kidney cell model</div>`);
+  // B: thermodynamics by construction
+  mk(B, 'abs h1', 'left:120px;top:150px;font-size:64px', 'Thermodynamics by construction');
+  const bsub = mk(B, 'abs', 'left:122px;top:236px;font-size:34px;color:var(--soft);font-weight:500', 'The second law holds for any weights, at any point in training.');
+  mk(B, 'abs k', 'left:122px;top:330px;font-size:20px', 'Cycle affinity residual · log scale · lower is better');
+  const AX0 = 640, AX1 = 1780, dec = (AX1 - AX0) / 16, xl = e => AX0 + (e + 16) * dec;
+  [-16, -12, -8, -4, 0].forEach(e => {
+    mk(B, 'abs', `left:${xl(e)}px;top:388px;width:1px;height:280px;background:#2C3A66`);
+    mk(B, 'abs k num', `left:${xl(e) - 60}px;top:680px;width:120px;text-align:center;font-size:20px;color:var(--mute);text-transform:none`, `10<sup>${e === 0 ? '0' : '−' + (-e)}</sup>`);
+  });
+  const thr = mk(B, 'abs', `left:${xl(-10)}px;top:380px;width:0;height:300px;border-left:3px dashed #9AA7CD`);
+  const thrL = mk(B, 'abs k', `left:${xl(-10) + 14}px;top:372px;font-size:17px;text-transform:none;letter-spacing:.04em;color:var(--soft)`, 'test fails above 10<sup>−10</sup>');
+  const rowsB = [['Structured (ours)', C.indigo, C.indigoHi, -15, null, '~10<sup>−15</sup>'], ['Unconstrained network', C.gray, C.text, -4, -2, '10<sup>−4</sup> to 10<sup>−2</sup>']].map((r, i) => {
+    const y = 420 + i * 130;
+    const lab = mk(B, 'abs t', `left:120px;top:${y + 6}px;width:${AX0 - 160}px;font-size:36px`, r[0]);
+    const fit = mk(B, 'abs k', `left:122px;top:${y + 56}px;font-size:19px;color:var(--soft)`, 'fits the data ✓');
+    const bar = mk(B, 'bar', `left:${AX0}px;top:${y}px;height:84px;background:${r[1]}`);
+    const ext = r[4] != null ? mk(B, 'bar', `left:${xl(r[3])}px;top:${y}px;height:84px;background:repeating-linear-gradient(135deg,#7D869F 0 10px,#566079 10px 20px)`) : null;
+    const val = mk(B, 'abs h1 num', `top:${y + 18}px;font-size:40px;color:${r[2]}`, r[5]);
+    return {lab, fit, bar, ext, val, e: r[3], e2: r[4]};
+  });
+  const nothing = mk(B, 'abs t', 'left:120px;top:752px;font-size:40px;color:var(--indigo-hi)', 'Ours cannot make current from nothing.');
+  // C: KcsA I–V from the team code
+  mk(Cc, 'abs h1', 'left:120px;top:146px;font-size:56px', 'KcsA current–voltage');
+  mk(Cc, 'abs k', 'left:122px;top:214px;font-size:19px;text-transform:none;letter-spacing:.04em', 'single-ion bond graph · [K<sup>+</sup>] 140 mM in, 4 mM out · 298 K');
+  const W0 = 1000, H0 = 600;
+  const svg = sv(Cc, 'svg', {width: W0, height: H0, viewBox: `0 0 ${W0} ${H0}`, style: 'position:absolute;left:96px;top:262px;overflow:visible'});
+  const px0 = 120, px1 = 960, py0 = 20, py1 = 520, Imin = -0.25, Imax = 1.45;
+  const X = v => px0 + (v + 200) / 400 * (px1 - px0), Y = i => py1 - (i - Imin) / (Imax - Imin) * (py1 - py0);
+  [-200, -100, 0, 100, 200].forEach(v => {
+    sv(svg, 'line', {x1: X(v), x2: X(v), y1: py0, y2: py1, stroke: v === 0 ? '#3B4B7E' : '#243159', 'stroke-width': v === 0 ? 2 : 1});
+    const tx = sv(svg, 'text', {x: X(v), y: py1 + 34, 'text-anchor': 'middle', fill: C.mute, 'font-family': 'JetBrains Mono', 'font-size': 19});
+    tx.textContent = (v < 0 ? '−' : '') + Math.abs(v);
+  });
+  [0, 0.5, 1.0].forEach(i => {
+    sv(svg, 'line', {x1: px0, x2: px1, y1: Y(i), y2: Y(i), stroke: i === 0 ? '#3B4B7E' : '#243159', 'stroke-width': i === 0 ? 2 : 1});
+    const tx = sv(svg, 'text', {x: px0 - 16, y: Y(i) + 6, 'text-anchor': 'end', fill: C.mute, 'font-family': 'JetBrains Mono', 'font-size': 19});
+    tx.textContent = i.toFixed(1);
+  });
+  const xlab = sv(svg, 'text', {x: (px0 + px1) / 2, y: py1 + 72, 'text-anchor': 'middle', fill: C.soft, 'font-family': 'JetBrains Mono', 'font-size': 20, 'letter-spacing': 2});
+  xlab.textContent = 'MEMBRANE VOLTAGE (mV)';
+  const ylab = sv(svg, 'text', {x: 0, y: 0, transform: `translate(${px0 - 78},${(py0 + py1) / 2}) rotate(-90)`, 'text-anchor': 'middle', fill: C.soft, 'font-family': 'JetBrains Mono', 'font-size': 20, 'letter-spacing': 2});
+  ylab.textContent = 'CURRENT (pA)';
+  const V = K.V_mV, I = K.I.map(x => x * 1e12);
+  const curve = sv(svg, 'path', {fill: 'none', stroke: C.indigo, 'stroke-width': 6, 'stroke-linejoin': 'round', 'stroke-linecap': 'round'});
+  const Erev = K.reversal_mV, En = K.nernst_mV;
+  const nline = sv(svg, 'line', {x1: X(En), x2: X(En), y1: py0, y2: py1, stroke: C.cyan, 'stroke-width': 3, 'stroke-dasharray': '10 9'});
+  const ring = sv(svg, 'circle', {cx: X(Erev), cy: Y(0), r: 20, fill: 'none', stroke: C.indigoHi, 'stroke-width': 3});
+  const dot = sv(svg, 'circle', {cx: X(Erev), cy: Y(0), r: 10, fill: C.indigoHi});
+  const erevL = mk(Cc, 'abs', `left:${96 + X(Erev) - 310}px;top:${262 + Y(0) - 150}px;width:290px;text-align:right`,
+    `<div class="k" style="font-size:19px;color:var(--indigo-hi)">Model zero current</div><div class="h1 num" style="font-size:52px;margin-top:6px">${Erev < 0 ? '−' : ''}${Math.abs(Erev).toFixed(2)} mV</div>`);
+  const nernL = mk(Cc, 'abs', `left:${96 + X(En) + 26}px;top:${262 + py0 + 10}px;width:330px`,
+    `<div class="k" style="font-size:19px;color:var(--cyan)">Nernst E<sub style="font-size:.7em">K</sub></div><div class="h1 num" style="font-size:52px;margin-top:6px;color:var(--cyan)">${En < 0 ? '−' : ''}${Math.abs(En).toFixed(2)} mV</div>`);
+  // right column: the filter landscape, then the Nernst scan
+  const site = mk(Cc, 'abs', 'left:1196px;top:146px;width:630px;height:330px');
+  site.innerHTML = '<div class="k" style="font-size:19px">Selectivity filter · PDB 1K4C</div><div class="k" style="font-size:16px;color:var(--mute);margin-top:6px;text-transform:none;letter-spacing:.03em">F(z), kJ/mol · constrained to published values</div>';
+  const ss = sv(site, 'svg', {width: 630, height: 250, viewBox: '0 0 630 250', style: 'position:absolute;left:0;top:74px;overflow:visible'});
+  const zx = z => 20 + (z + 9) / 18 * 590, Fy = f => 190 - f / 11 * 170;
+  const lz = K.landscape_z, lf = K.landscape_F_kJ;
+  sv(ss, 'line', {x1: 20, x2: 610, y1: 190, y2: 190, stroke: '#2C3A66', 'stroke-width': 2});
+  sv(ss, 'path', {d: lz.map((z, i) => (i ? 'L' : 'M') + zx(z).toFixed(1) + ' ' + Fy(lf[i]).toFixed(1)).join(''), fill: 'none', stroke: C.soft, 'stroke-width': 3});
+  Object.entries(K.sites).forEach(([n, z]) => {
+    sv(ss, 'circle', {cx: zx(z), cy: 190, r: 11, fill: C.gold});
+    const tx = sv(ss, 'text', {x: zx(z), y: 228, 'text-anchor': 'middle', fill: C.text, 'font-family': 'JetBrains Mono', 'font-size': 19});
+    tx.textContent = n;
+  });
+  const scan = mk(Cc, 'abs', 'left:1196px;top:500px;width:630px');
+  const rowsN = K.nernst_scan;
+  const f2 = x => (Math.abs(x) < 5e-3 ? '0.00' : (x < 0 ? '−' : '') + Math.abs(x).toFixed(2));
+  scan.innerHTML = `<div class="k" style="font-size:18px;display:grid;grid-template-columns:150px 240px 240px;padding-bottom:10px;border-bottom:1px solid #3B4B7E">
+      <span>[K<sup>+</sup>] out</span><span style="text-align:right">model E<sub>rev</sub></span><span style="text-align:right">Nernst</span></div>` +
+    rowsN.map((r, i) => `<div class="num scanrow" style="display:grid;grid-template-columns:150px 240px 240px;font-size:30px;font-weight:600;padding:7px 0;border-bottom:1px solid #243159">
+      <span class="soft">${r.c_out} mM</span><span style="text-align:right;color:var(--indigo-hi)">${f2(r.E_rev_mV)} mV</span><span style="text-align:right;color:var(--cyan)">${f2(r.E_nernst_mV)} mV</span></div>`).join('') +
+    `<div class="k" style="font-size:17px;margin-top:14px;text-transform:none;letter-spacing:.03em">100-fold range · largest gap ${(Math.max(...rowsN.map(r => Math.abs(r.diff_mV)))).toExponential(0).replace('e-', '×10<sup>−').replace(/$/, '</sup>')} mV</div>`;
+  const scanRows = [...scan.querySelectorAll('.scanrow')];
+  const s = i => S('physiology', i);
+  R.physiology = t => {
+    const pa = phase(t, -Infinity, s(3).start), pb = phase(t, s(3).start, s(5).start), pc = phase(t, s(5).start, Infinity);
+    [[A, pa], [B, pb], [Cc, pc]].forEach(([el, p]) => { el.style.opacity = p.toFixed(3); el.style.display = p > .002 ? 'block' : 'none'; });
+    if (pa > .002) {
+      show(head, rv(t, s(0).start - .3), 16);
+      const sp = rv(t, s(0).start + .3, 1.6);
+      span.style.clipPath = `inset(0 ${(100 * (1 - sp)).toFixed(1)}% 0 0)`;
+      show(endL, rv(t, s(0).start + .3)); show(endR, rv(t, s(0).start + 1.5));
+      const tp = [W('physiology', 1, 'trajectory', -.3), W('physiology', 2, 'diffusion', -.2), W('physiology', 2, 'free energy', -.2), W('physiology', 2, 'barriers', -.2), W('physiology', 2, 'bond graph', -.2), W('physiology', 2, 'cell M L', -.3)];
+      pbox.forEach((b, i) => show(b, rv(t, tp[i]), 22));
+      parr.forEach((a, i) => show(a, rv(t, tp[i + 1] - .15), 0, -12));
+      const tc = W('physiology', 1, 'heart', -.3);
+      show(down, rv(t, Math.max(tc, tp[5] + .2)), -16); show(cell, rv(t, tc), 20);
+      endR.style.opacity = (rv(t, s(0).start + 1.5) * (1 - rv(t, tc - .3))).toFixed(3);
+    }
+    if (pb > .002) {
+      show(bsub, rv(t, W('physiology', 3, 'second law', -.2)), 12);
+      rowsB.forEach((r, i) => {
+        const t0 = i === 0 ? W('physiology', 3, 'second law', .6) : s(4).start + .2;
+        const p = eo(ramp(t, t0, t0 + 1.2));
+        const wMain = (xl(r.e) - AX0) * p;
+        r.bar.style.width = wMain.toFixed(1) + 'px';
+        let end = AX0 + wMain;
+        if (r.ext) {
+          const pe = eo(ramp(t, t0 + 1.0, t0 + 1.7));
+          const we = (xl(r.e2) - xl(r.e)) * pe;
+          r.ext.style.width = we.toFixed(1) + 'px';
+          r.ext.style.opacity = pe > 0 ? 1 : 0;
+          end += we;
+        }
+        r.val.style.left = (end + 20).toFixed(1) + 'px';
+        r.val.style.opacity = ramp(t, t0 + .3, t0 + .8).toFixed(3);
+        r.lab.style.opacity = (.3 + .7 * ramp(t, t0 - .4, t0)).toFixed(3);
+        show(r.fit, rv(t, W('physiology', 4, 'fits', -.1 + .35 * i)), 8);
+      });
+      const pt = rv(t, W('physiology', 3, 'second law', .3));
+      thr.style.opacity = pt; thrL.style.opacity = pt;
+      show(nothing, rv(t, W('physiology', 4, 'Ours', -.2)), 14);
+    }
+    if (pc > .002) {
+      const t0 = s(5).start + .1, t1 = W('physiology', 5, 'reversal', -.2);
+      const p = eio(ramp(t, t0, t1));
+      const n = Math.max(2, Math.ceil(p * (V.length - 1)) + 1);
+      let d = '';
+      for (let i = 0; i < n && i < V.length; i++) {
+        let v = V[i], c = I[i];
+        if (i === n - 1 && p < 1) { const f = p * (V.length - 1) - (n - 2); v = V[i - 1] + (V[i] - V[i - 1]) * f; c = I[i - 1] + (I[i] - I[i - 1]) * f; }
+        d += (i ? 'L' : 'M') + X(v).toFixed(1) + ' ' + Y(c).toFixed(1);
+      }
+      curve.setAttribute('d', d);
+      const pm = rv(t, W('physiology', 5, 'reversal', .1), .5);
+      dot.setAttribute('opacity', pm); ring.setAttribute('opacity', pm);
+      ring.setAttribute('r', (20 + 14 * (1 - pm)).toFixed(1));
+      show(erevL, pm, 0, -16);
+      const pn = rv(t, s(6).start - .1, .6);
+      nline.setAttribute('opacity', pn);
+      nline.setAttribute('stroke-dashoffset', (-40 * pn).toFixed(1));
+      show(nernL, pn, 0, 16);
+      show(site, rv(t, W('physiology', 5, 'crystal', -.4)), 16);
+      show(scan, rv(t, W('physiology', 6, 'hundred-fold', -.6)), 16);
+      const tr0 = W('physiology', 6, 'hundred-fold', -.4);
+      scanRows.forEach((r, i) => { r.style.opacity = rv(t, tr0 + .3 * i, .35).toFixed(3); });
+    }
+  };
+}
+
+/* ---------------- 5 · Honesty ---------------- */
+{
+  const root = $('sc-honesty');
+  mk(root, 'abs k', 'left:120px;top:150px;font-size:22px', 'How we check');
+  const hd2 = mk(root, 'abs k', 'left:980px;top:150px;font-size:22px;color:var(--gold-hi)', 'What didn’t work (yet)');
+  const checks = [['✓', 'Provenance on every number', 'each value records the code and data behind it'],
+                  ['✓', 'Controls that must fail', 'every test has a negative control'],
+                  ['✓', 'Mutation audit: 12 of 14 caught', 'code broken on purpose; the fast tests notice']];
+  const ck = checks.map((c, i) => mk(root, 'row', `left:120px;top:${214 + i * 150}px;width:800px`,
+    `<div class="mark" style="background:#22315C;color:var(--indigo-hi);border:2px solid #6A84DE">${c[0]}</div><div><div class="t" style="font-size:38px">${c[1]}</div><div class="soft" style="font-size:26px;margin-top:8px">${c[2]}</div></div>`));
+  const limits = [['!', 'Landscape constrained, not learned', 'KcsA F(z) is set from published values'],
+                  ['!', 'Barriers not pinned down', 'trapped ions never cross in our MD'],
+                  ['!', 'Conductance more than 20× low', '4.5 pS in the model vs ~100 pS measured'],
+                  ['!', 'Single-ion model, multi-ion channel', 'KcsA conducts by knock-on'],
+                  ['→', 'Moved to gramicidin A', 'single file, one ion at a time · built in a membrane, equilibrated']];
+  const lm = limits.map((c, i) => mk(root, 'row', `left:980px;top:${214 + i * 126}px;width:840px`,
+    i < 4 ? `<div class="mark" style="background:rgba(184,137,60,.16);color:var(--gold-hi);border:2px solid #B8893C">${c[0]}</div><div><div class="t" style="font-size:34px">${c[1]}</div><div class="soft" style="font-size:24px;margin-top:6px">${c[2]}</div></div>`
+          : `<div class="mark" style="background:#6A84DE;color:#0D1226">${c[0]}</div><div><div class="t" style="font-size:34px;color:var(--indigo-hi)">${c[1]}</div><div class="soft" style="font-size:24px;margin-top:6px">${c[2]}</div></div>`));
+  const div = mk(root, 'abs', 'left:930px;top:160px;width:2px;height:690px;background:#2C3A66');
+  const s = i => S('honesty', i);
+  const tC = [s(0).start - .2, W('honesty', 0, 'and a mutation', -.6), W('honesty', 0, 'breaks', -.2)];
+  const tL = [s(2).start - .1, W('honesty', 2, 'trapped', -.2), s(3).start - .1, W('honesty', 3, 'potassium crosses', -.2), s(4).start - .1];
+  R.honesty = t => {
+    ck.forEach((c, i) => show(c, rv(t, tC[i]), 0, -22));
+    show(hd2, rv(t, s(1).start - .2), 10);
+    div.style.opacity = rv(t, s(1).start - .2).toFixed(3);
+    lm.forEach((c, i) => show(c, rv(t, tL[i]), 0, -22));
+  };
+}
+
+/* ---------------- 6 · Close + end card ---------------- */
+{
+  const root = $('sc-close');
+  const photo = mk(root, 'photo', "background-image:url('../assets/photos/5.jpg')");
+  mk(root, 'shade');
+  const top = mk(root, 'abs', 'inset:0');
+  const q = mk(top, 'abs h1', 'left:0;width:1920px;top:150px;text-align:center;font-size:96px', 'How far can a chain of<br>surrogates take us?');
+  const ans = mk(top, 'abs t', 'left:0;width:1920px;top:376px;text-align:center;font-size:44px;color:var(--gold-hi);font-weight:600',
+    'Further than we expected, if every link carries its own evidence.');
+  const cards = [[C.indigo, C.indigoHi, 'Rung 1 · screening', '925M molecules in 4 h 27 min', '35.0% of the docking top 1M · 381× fewer GPU hours'],
+                 [C.gold, C.goldHi, 'Rung 2 · atoms to a cell', 'MD → bond graph → CellML', 'zero current at the Nernst potential · second law by construction']].map((c, i) =>
+    mk(top, 'box flexc', `left:${165 + i * 820}px;top:520px;width:770px;height:250px;padding:0 44px;border-color:${c[0]}`,
+      `<div class="k" style="color:${c[1]};font-size:21px">${c[2]}</div><div class="h1" style="font-size:52px;margin-top:12px">${c[3]}</div><div class="soft" style="font-size:26px;margin-top:12px">${c[4]}</div>`));
+  const chain = [['Screen', 'Lightning'], ['Pose', 'co-folding'], ['Simulate', 'molecular dynamics'], ['Bond graph', 'CellML'], ['Cell', 'physiology']];
+  const cw = 296, cg = (1728 - 5 * cw) / 4;
+  const cb = chain.map((c, i) => mk(top, 'box flexc', `left:${96 + i * (cw + cg)}px;top:540px;width:${cw}px;height:190px;padding:0 30px;${i === 0 ? 'border-color:#6A84DE' : i >= 3 ? 'border-color:#B8893C' : ''}`,
+    `<div class="t" style="font-size:42px">${c[0]}</div><div class="k" style="font-size:18px;margin-top:12px;text-transform:none;letter-spacing:.04em">${c[1]}</div>`));
+  const ca = [0, 1, 2, 3].map(i => mk(top, 'abs', `left:${96 + (i + 1) * cw + i * cg + 6}px;top:620px`, arrowH(cg - 12)));
+  const nextK = mk(top, 'abs k', 'left:96px;top:494px;font-size:20px;color:var(--cyan)', 'Next: join the rungs');
+  // end card
+  const end = mk(root, 'abs flexc', 'left:0;top:104px;width:1920px;height:790px;align-items:center;text-align:center');
+  end.innerHTML = `<div class="k" style="color:var(--cyan);font-size:24px;letter-spacing:.2em">OSI Hackathon 2026 · Auckland</div>
+    <div class="h1" style="font-size:92px;margin-top:18px">It’s all open source.</div>
+    <div style="margin-top:34px;display:grid;grid-template-columns:auto auto;column-gap:28px;row-gap:10px;align-items:baseline;text-align:left">
+      <span class="k" style="font-size:18px;color:var(--mute);text-align:right">Code &amp; data</span><span style="font-family:var(--mono);font-size:36px">https://github.com/drai-inn/surrogate-chain</span>
+      <span class="k" style="font-size:18px;color:var(--mute);text-align:right">Write-up</span><span style="font-family:var(--mono);font-size:36px;color:var(--indigo-hi)">https://drai-inn.github.io/surrogate-chain/</span>
+    </div>
+    <div id="team"></div><div id="affils"></div>`;
+  const s = i => S('close', i);
+  const tEnd = s(3).start - .15;
+  window.__endCardStart = tEnd;
+  R.close = t => {
+    const pe = rv(t, tEnd - .3, .6);
+    top.style.opacity = (1 - pe).toFixed(3); top.style.display = pe > .998 ? 'none' : 'block';
+    photo.style.opacity = (.16 * pe).toFixed(3);
+    photo.style.transform = `scale(${(1.02 + .04 * ramp(t, tEnd, TL.duration)).toFixed(4)})`;
+    show(end, pe, 18);
+    show(q, rv(t, s(0).start - .4), 14);
+    show(ans, rv(t, W('close', 0, 'Further', -.2)), 12);
+    const pcards = rv(t, s(1).start - .2) * (1 - ramp(t, s(2).start - .4, s(2).start));
+    cards.forEach((c, i) => show(c, pcards * rv(t, i === 0 ? W('close', 1, 'Lightning', -.2) : W('close', 1, 'The bond', -.2)), 18));
+    const tc = [W('close', 2, 'Screen', -.2), W('close', 2, 'pose', -.2), W('close', 2, 'simulate', -.2), W('close', 2, 'and ask', -.2), W('close', 2, 'cell', -.3)];
+    show(nextK, rv(t, s(2).start - .1), 8);
+    cb.forEach((b, i) => show(b, rv(t, tc[i]), 20));
+    ca.forEach((a, i) => show(a, rv(t, tc[i + 1] - .1), 0, -12));
+  };
+  // team names, injected at render time from data/team.json
+  window.setTeam = function (data) {
+    const team = (data && data.team) || [], affs = (data && data.affiliations) || [];
+    const box = $('team'), foot = $('affils');
+    box.innerHTML = ''; foot.innerHTML = '';
+    if (!team.length) return;
+    const idxBased = team.some(p => typeof p.affiliation === 'number' || Array.isArray(p.affiliation));
+    const zero = idxBased && team.some(p => [].concat(p.affiliation).includes(0));
+    const rungColor = r => { const s = String(r == null ? '' : r); return /2/.test(s) ? C.gold : /1/.test(s) ? C.indigo : null; };
+    const n = team.length, cols = n <= 4 ? 2 : 3;
+    box.style.gridTemplateColumns = `repeat(${cols},${cols === 2 ? 560 : 500}px)`;
+    const scale = n > 18 ? .78 : n > 15 ? .88 : 1;
+    team.forEach(p => {
+      const c = rungColor(p.rung);
+      let aff = '';
+      if (idxBased) aff = [].concat(p.affiliation).filter(x => x != null).map(x => `<sup>${zero ? x + 1 : x}</sup>`).join('');
+      const d = mk(box, 'p', '');
+      d.innerHTML = `<span class="dot" style="background:${c || 'transparent'}"></span><div><div class="n" style="font-size:${30 * scale}px">${p.name}${idxBased ? aff : ''}</div>` +
+        (!idxBased && p.affiliation ? `<div class="a" style="font-size:${20 * scale}px">${p.affiliation}</div>` : '') + '</div>';
+    });
+    if (idxBased && affs.length) foot.innerHTML = affs.map((a, i) => `<sup>${i + 1}</sup>${a}`).join('&nbsp;&nbsp; ');
+    else if (!idxBased && affs.length && !team.some(p => p.affiliation)) foot.textContent = affs.join(' · ');
+    if (team.some(p => rungColor(p.rung))) foot.innerHTML += `${foot.innerHTML ? '<br>' : ''}<span style="color:${C.indigoHi}">●</span> rung 1 · screening &nbsp;&nbsp; <span style="color:${C.goldHi}">●</span> rung 2 · atoms to a cell`;
+  };
+}
+
+/* ---------------- frame ---------------- */
+const chunks = TL.sentences.flatMap(s => s.chunks);
+const firstCap = chunks[0].start, lastCap = chunks[chunks.length - 1].show_end;
+const cap = $('cap'), band = $('capband'), fitCache = {};
+function sceneAlpha(id, t) {
+  const i = TL.scenes.findIndex(s => s.id === id), s = TL.scenes[i];
+  const a = i === 0 ? 1 : rv(t, s.start - .55, .6);
+  const b = i === TL.scenes.length - 1 ? 1 : 1 - ramp(t, s.end - .1, s.end + .4);
+  return a * b;
+}
+window.renderAt = function (t) {
+  let cur = TL.scenes[0];
+  TL.scenes.forEach(s => {
+    const a = sceneAlpha(s.id, t), el = $('sc-' + s.id);
+    el.style.opacity = a.toFixed(3);
+    el.style.display = a > .002 ? 'block' : 'none';
+    if (a > .002) R[s.id](t);
+    if (t >= s.start - .5) cur = s;
+  });
+  $('labeltxt').textContent = cur.label;
+  const topA = ramp(t, 2.4, 3.0) * (1 - ramp(t, window.__endCardStart - .3, window.__endCardStart + .2));
+  $('top').style.opacity = (topA * sceneAlpha(cur.id, t)).toFixed(3);
+  $('prog').style.width = (1920 * clamp(t / TL.duration)).toFixed(1) + 'px';
+  $('prog').style.opacity = (.9 * ramp(t, 2.4, 3.0)).toFixed(3);
+  band.style.opacity = (ramp(t, firstCap - .45, firstCap - .1) * (1 - ramp(t, lastCap + .1, lastCap + .6))).toFixed(3);
+  const c = chunks.find(c => t >= c.start - .04 && t < c.show_end);
+  if (c) {
+    if (cap.dataset.txt !== c.text) {
+      cap.textContent = c.text; cap.dataset.txt = c.text;
+      let fs = fitCache[c.text] || 46;
+      cap.style.fontSize = fs + 'px';
+      while (!fitCache[c.text] && cap.scrollHeight > fs * 1.27 * 2 + 6 && fs > 40) { fs -= 2; cap.style.fontSize = fs + 'px'; }
+      fitCache[c.text] = fs;
+    }
+    cap.style.opacity = Math.min(ramp(t, c.start - .04, c.start + .08), 1 - ramp(t, c.show_end - .08, c.show_end)).toFixed(3);
+  } else { cap.style.opacity = 0; }
+};
+window.captionLines = function () {   // for QA: lines in every caption chunk
+  return chunks.map(c => { cap.textContent = c.text; cap.style.fontSize = (fitCache[c.text] || 46) + 'px'; return [Math.round(cap.scrollHeight / (parseFloat(cap.style.fontSize) * 1.27)), c.text.length, c.text]; });
+};
+window.renderAt(parseFloat(new URLSearchParams(location.search).get('t') || '1.9'));
+})();
+</script>
+</body>
+</html>
