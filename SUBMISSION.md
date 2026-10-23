@@ -10,7 +10,7 @@ Everything needed for the OSI Hackathon 2026 submission on Moment
 - [x] **One-page write-up with a figure:** [`writeup.pdf`](writeup.pdf). Markdown version below for pasting.
 - [x] **Code repository:** <https://github.com/jmdowrick/hackathon2026>, with write-up and video at <https://github.com/drai-inn/surrogate-chain>
 - [ ] **Platforms used:** tick what applies. Only tick Valency, Adaption or marimo if a team actually used them (the sponsor prizes require it).
-- [x] **Team:** Nick Jones, Chris Scott, Jack Copping, Te Xiao, Claire Rye, Samantha Rickard, Jarrah Dowrick, Jack Flanagan, Peter Hunter, Carvin Chen, Jun Huh, Neil Blake, Jagir Hussan, Ben Curran, Lizhe Hong, Mohamed Elwakdy.
+- [x] **Team:** Nick Jones, Chris Scott, Jack Copping, Te Xiao, Claire Rye, Samantha Rickard, Jarrah Dowrick, Jack Flanagan, Peter Hunter, Carvin Chen, Jun Huh, Neil Blake, Jagir Hussan, Ben Curran, Lizhe Hong, Mohamed Elwakdy, Esther Sun.
 
 **Project title:** How far can a chain of surrogates take us in biomolecular interactions?
 
@@ -24,7 +24,7 @@ Everything needed for the OSI Hackathon 2026 submission on Moment
 # How far can a chain of surrogates take us in biomolecular interactions?
 *OSI Hackathon 2026 · Auckland hub*
 
-**Team:** Nick Jones, Chris Scott, Jack Copping, Te Xiao, Claire Rye, Samantha Rickard, Jarrah Dowrick, Jack Flanagan, Peter Hunter, Carvin Chen, Jun Huh, Neil Blake, Jagir Hussan, Ben Curran, Lizhe Hong, Mohamed Elwakdy
+**Team:** Nick Jones, Chris Scott, Jack Copping, Te Xiao, Claire Rye, Samantha Rickard, Jarrah Dowrick, Jack Flanagan, Peter Hunter, Carvin Chen, Jun Huh, Neil Blake, Jagir Hussan, Ben Curran, Lizhe Hong, Mohamed Elwakdy, Esther Sun
 
 Physiological outcomes come from molecules interacting. Those interactions produce functional change; function is driven by spatial and structural change; pharmacology is the effect of drugs on that system. Machine learning now offers a surrogate at every rung — association models over sequence, 3D-aware models over structure, interatomic potentials over atoms and motion, multi-scale models over cells and tissue. Most are open-weight and most arrived recently. Most of us know our own rung. We climbed two, and measured how far each can be trusted.
 
